@@ -1,0 +1,17 @@
+.sectorTitle{
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4vh;
+    color: white;
+    text-shadow: 
+          -0.5px -0.5px 0 #000,  
+           0.5px -0.5px 0 #000,
+          -0.5px  0.5px 0 #000,
+           0.5px  0.5px 0 #000;
+    margin-left: 10px;
+}
+
+.weather{
+    background-color: #3333356e;
+  border-radius: 7px;
+  box-shadow: 0 4px 8px rgba(236, 148, 148, 0.1);
+}

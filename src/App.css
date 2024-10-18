@@ -1,0 +1,22 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  color: white;
+}
+
+.sector {
+  margin-bottom: 30px;
+}
+
+.enabled td {
+  color: lightgreen;
+}
+
+.disabled td {
+  color: red;
+}

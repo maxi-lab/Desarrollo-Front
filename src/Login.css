@@ -1,0 +1,97 @@
+.auth-container{
+  background-image: url('./LoginBG.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+.form{
+  background-color: #3333356e; 
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 35vw;
+  height: 46vh;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#submit {
+  padding: 10px;
+  width: 100%;
+  background-color: #F86F03;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-items: center;
+}
+
+#submit:hover {
+  background-color: #fd8122;
+}
+
+.secondButton{
+  background-color: #FFA41B;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.secondButton:hover{
+  background-color: #fcab33;
+}
+
+#PinosL{
+  height: 10vh;
+  float: left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+#icon{
+  height: 100%;
+  float: left;
+  margin-left: 1px;
+}
+
+#AppName{
+  font-size: 2rem;
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.text{
+  color: white;
+}
+
+#title{
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4vh;
+  color: white;
+  text-shadow: 
+        -0.5px -0.5px 0 #000,  
+         0.5px -0.5px 0 #000,
+        -0.5px  0.5px 0 #000,
+         0.5px  0.5px 0 #000;
+}
