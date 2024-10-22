@@ -1,10 +1,10 @@
 
-import '../../Menu.css'
-import Login from '../../Login';
-import Info from '../../Info';
+import '../../Pages/Menu/Menu.css'
+import Login from '../../Pages/LogIn/Login';
+import Info from '../../Pages/Info/Info';
 import App from '../../App';
 import { useNavigate } from 'react-router-dom';
-import Icon from '../../Icon.png';
+import Icon from '../../assets/Icon.png';
 
 export function Heading(params) {
     const navigate =useNavigate();

@@ -15,7 +15,7 @@ html, body {
   .bottom{
     height: 90%;
     overflow: hidden;
-    background-image: url('./InfoBG.jpg');
+    background-image: url('../../assets/InfoBG.jpg');
     background-size: cover;
     background-position: center;
     display: flex;

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import Mapa from './Mapa.jpg';
+import Mapa from '../../assets/Mapa.jpg';
 import './Menu.css';
 /* import Login from './Login';
 import Icon from './Icon.png';
 import App from './App';
 import Info from './Info'
 import {useNavigate} from 'react-router-dom'; */
-import { Heading } from './Components/Heading/Headiing';
+import { Heading } from '../../Components/Heading/Headiing';
 
 function Menu() {
     /* const navigate =useNavigate();

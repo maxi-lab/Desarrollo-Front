@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
+import Icon from '../../assets/Icon.png';
 import './Login.css';
-import LoginBG from './LoginBG.jpg';
-import Icon from './Icon.png';
-import { UserContext } from './UserContext';
-import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../Context/UserContext';
 
 function Login() {
     const [username, setUsername] = useState('');
