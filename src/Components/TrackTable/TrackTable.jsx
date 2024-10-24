@@ -1,5 +1,5 @@
 import React from 'react';
-import TrackRow from './TrackRow';
+import TrackRow from '../TrakRow/TrackRow';
 import './TrackTable.css';
 
 const sectors = [

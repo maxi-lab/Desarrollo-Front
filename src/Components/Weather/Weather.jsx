@@ -1,5 +1,5 @@
 import React from "react";
-import TrackRow  from "./TrackRowWeather";
+import TrackRow  from "../TrackRowWeather/TrackRowWeather";
 import './Weather.css'
 
 const weather = [

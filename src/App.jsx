@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import TrackTable from './TrackTable';
-import Weather from './Weather';
-import Login from './Login';
-import Menu from './Menu';
-import Info from './Info'
+import Login from './Pages/LogIn/Login';
+import Menu from './Pages/Menu/Menu';
+import Info from './Pages/Info/Info'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { UserProvider } from './UserContext';
+import { UserProvider } from './Context/UserContext';
 
 function App() {
   // Estado para manejar qué sección está activa
