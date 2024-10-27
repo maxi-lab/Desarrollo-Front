@@ -1,5 +1,5 @@
 .auth-container{
-  background-image: url('./LoginBG.jpg');
+  background-image: url("../../assets/LoginBG.jpg");
   background-size: cover;
   background-position: center;
   display: flex;
@@ -20,7 +20,7 @@
   align-items: center;
   gap: 10px;
   width: 35vw;
-  height: 46vh;
+  height: 49vh;
 }
 
 input {
