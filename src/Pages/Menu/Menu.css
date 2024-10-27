@@ -4,34 +4,34 @@
     box-sizing: border-box;
   }
   
-  html, body {
+html, body {
     height: 100%;
-  }
+}
   
-  .MenuContainer {
+.MenuContainer {
     height: 100vh;
     width: 100vw; /* Asegura que el contenedor ocupe el 100% del ancho de la pantalla */
     display: flex;
     flex-direction: column;
-  }
+}
   
-  .top{
+.top{
     height: 10%;
     background: linear-gradient(#525FE1, #9ec7cc);
-  }
+}
   
-  .bottom{
+.bottom{
     height: 90%;
     overflow: hidden;
-  }
+}
   
-  .image {
+.image {
     width: 100%;
     height: 100%;
     object-fit: fill;
-  }
+}
   
-  #login{
+#login{
     float: right;
     background-color: #F86F03;
     height: 8vh;
@@ -46,19 +46,19 @@
          0.5px -0.5px 0 #000,
         -0.5px  0.5px 0 #000,
          0.5px  0.5px 0 #000;
-  }
+}
 
-  #login:hover{
+#login:hover{
     background-color: #fd8325;
-  }
+}
 
-  #icon{
+#icon{
     height: 100%;
     float: left;
     margin-left: 10px;
-  }
+}
 
-  .MenuButton{
+.MenuButton{
     height: 6vh;
     width: 7vw;
     margin-top: 1%;
@@ -75,26 +75,27 @@
          0.5px -0.5px 0 #000,
         -0.5px  0.5px 0 #000,
          0.5px  0.5px 0 #000;
-  }
+}
 
-  .MenuButton:hover{
+.MenuButton:hover{
     background-color: #fdb03c;
-  }
-  .menu{
+}
+.menu{
     float: right;
     
-  }
+}
 
-  #AppName{
-    font-size: 4vw;
-    font-family: 'Bebas Neue', sans-serif;
+#AppName{
+  font-size: 4vw;
+  font-family: 'Bebas Neue', sans-serif;
+  
 
 }
 
 #Pinos{
     width: 21vw;
     height: 8vh;
-    object-fit: initial;
+    
     background: linear-gradient(#505ad3, #94bbc0);
     border-radius: 15px;   
 }
