@@ -30,6 +30,7 @@ function Info(){
         <div className='top'>
             <button id='login' onClick={handleLoginClick}>Iniciar sesión</button>
             <button id='emergency' onClick={rescate}>Emergencia</button>
+            
             <div id='menu'>
                 <button className='MenuButton' onClick={() => setActiveSection ('Pistas')}>Pistas</button>
                 <button className='MenuButton' onClick={() => setActiveSection ('Cond. del Tiempo')}>Clima</button>
