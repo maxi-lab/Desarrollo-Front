@@ -7,7 +7,7 @@ function AdminPage() {
   return (
     <div>
         <Heading></Heading>
-        <DataGridDemo classname='grid'></DataGridDemo>
+        <DataGridDemo ></DataGridDemo>
     </div>
 
   )
