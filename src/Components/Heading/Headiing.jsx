@@ -5,7 +5,10 @@ import Info from '../../Pages/Info/Info';
 import App from '../../App';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../../assets/Icon.png';
-
+import { AppBar, Avatar, Box, Button, ButtonGroup, IconButton, Toolbar, Typography } from '@mui/material';
+import { ThemeProvider} from '@mui/material/styles'
+import theme from '../../styles/Headingstyle/HeadingStyle';
+  
 export function Heading(params) {
     const navigate =useNavigate();
     const handleLoginClick = () => {
@@ -20,23 +23,73 @@ export function Heading(params) {
     const gestorPistas=()=>{
         navigate('/adminpage');
     }
+    const VolverMenu=()=>{
+        navigate('/menu');
+    }
     const handleWetherClick=()=>{
         navigate('/Weather');
     }
+    const buttons =[
+            <ButtonGroup>
+                    <Button
+                    color="primary"
+                    variant="outlined"
+                    onClick={gestorPistas}
+                    size="small"
+                    >GestorPistas
+                    </Button>,
+                    <Button 
+                    color="primary"
+                    variant="outlined"
+                    onClick={handleInfoClick}
+                    size="small"
+                    >Informacion</Button>,
+                    <Button
+                    color="error"
+                    variant="contained"
+                    onClick={rescate}
+                    size="mediun">
+                    Emergencia
+                    </Button>,
+                    <Button 
+                    
+                    color="primary"
+                    variant="outlined"
+                    onClick={handleLoginClick}
+                    size="large">Login</Button>
+            </ButtonGroup>
+
+    ]
     return (<>
-        <div className='top'>
-                <button id='login' onClick={handleLoginClick}>Iniciar sesión</button>
-                <button id='emergency' onClick={rescate}>Emergencia</button>
-                
-                <div id='menu'>
-                    <button className='MenuButton' onClick={handleInfoClick}>Informacion</button>
-                    <button className='MenuButton' onClick={gestorPistas}>GestorPistas</button>
-                </div>
-                <div id='Pinos'>
-                    <a href="/"><img src={Icon} id='icon'></img></a>
-                    <h1 id='AppName'>Los Pinos</h1>
-                </div>
-        </div>
+        <Box >
+            <ThemeProvider theme={theme}>
+            <AppBar  position="static" color="ThemeAppbar" enableColorOnDark>
+                <Toolbar>
+                <Avatar src={Icon}></Avatar>
+                <IconButton
+                    size="large"
+                    edge="start"
+                    color="inherit"
+                    aria-label="menu"
+                    onClick={VolverMenu}
+                    
+                    sx={{ mr: 2 }}
+                    >
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1,mr:2 }}>
+                        LOS PINOS
+                    </Typography>
+                </IconButton>
+                <Typography sx={{ flexGrow: 1,mr:2 }}/>
+                {buttons}
+                </Toolbar>
+            </AppBar>
+            </ThemeProvider>
+        </Box>
              
     </>);
 }
+//.image {
+// width: 100%;
+// height: 100%;
+// object-fit: fill;
+//}

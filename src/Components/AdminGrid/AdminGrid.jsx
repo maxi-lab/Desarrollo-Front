@@ -47,7 +47,17 @@ const rows = [
 
 export default function DataGridDemo() {
   return (
-    <Box sx={{ height: 400, width: '100%' }}>
+    <Box
+      sx={{
+        height: 400,
+        width: '80%', // ajustar según el tamaño deseado
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 'auto', // centra horizontalmente
+        mt: 20 // margen superior opcional
+      }}
+    >
       <DataGrid
         rows={rows}
         columns={columns}
@@ -62,7 +72,8 @@ export default function DataGridDemo() {
         checkboxSelection
         disableRowSelectionOnClick
         autoPageSize
+        autoHeight
       />
     </Box>
-  );
-}
+      );
+    }

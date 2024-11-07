@@ -18,6 +18,7 @@ function App() {
         <Route path="/Login" element={<Login onLogin={() => {}} />} />
         <Route path='/Info' element={<Info onInfo={() => {}} />} />
         <Route path='/AdminPage' element={<AdminPage onAdminPage={() => {}} />} />
+        <Route path='/Menu' element={<Menu onMenu={() => {}} />} />
       </Routes>
     </Router>
     </UserProvider>
