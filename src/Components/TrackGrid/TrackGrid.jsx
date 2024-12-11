@@ -9,16 +9,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 const rows = [
-  { id: 1, name: 'John Doe', age: 30 },
-  { id: 2, name: 'Jane Smith', age: 25 },
-  { id: 2, name: 'Jane Smith', age: 25 },
-  { id: 2, name: 'Jane Smith', age: 25 },
-  { id: 2, name: 'Jane Smith', age: 25 },
-  { id: 2, name: 'Jane Smith', age: 25 }
-  // Añade más filas según tus datos
+  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
+  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
+  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
+  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
+  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
+  
 ];
 
-function UserGrid() {
+export function TrackGrid() {
   return (
     <Box
       sx={{
@@ -34,9 +33,9 @@ function UserGrid() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Nombre</TableCell>
-              <TableCell>Edad</TableCell>
+              <TableCell>Pista</TableCell>
+              <TableCell>Dificultad</TableCell>
+              <TableCell>Estado</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -55,4 +54,4 @@ function UserGrid() {
   )
 }
 
-export default UserGrid
+
