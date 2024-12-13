@@ -21,21 +21,21 @@ function AdminPage() {
     setDatos((prev)=>prev.filter(d=>d.id!==id))
   }
   const pistas = [
-    { field: 'id', headerName: 'Pista', width: 90 },
+    { field: 'nombre', headerName: 'Pista', width: 90 },
     {
-      field: 'firstName',
+      field: 'dificultad',
       headerName: 'Dificultad',
       width: 150,
       editable: true,
     },
     {
-      field: 'lastName',
+      field: 'estado',
       headerName: 'Estado',
       width: 150,
       editable: true,
     },
     {
-      field: 'age',
+      field: 'minimo',
       headerName: 'Minimo necesario',
       type: 'number',
       width: 200,
@@ -180,10 +180,19 @@ function AdminPage() {
       renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
     },
   ]
-  const [datos,setDatos]=useState([])
-  const [entidades,setEntidades]=useState([])
-  useEffect(()=>{setEntidades(pistas)},[])
-  useEffect(()=>{setDatos(datoPista)},[])
+  const [datos,setDatos]=useState(datoPista)
+  const [entidades,setEntidades]=useState(pistas)
+/* useEffect(()=>{
+  const requestOptions = {
+    method: "GET",
+    redirect: "follow"
+  };
+  
+  fetch("https://localhost:7268/api/Pista", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error))
+},[]) */
   return (
     <div>
         <Heading/>
