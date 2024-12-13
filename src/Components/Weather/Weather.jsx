@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Grid2 } from '@mui/material';
-import {recuperar} from '../../data/WeatherAPI';
+import {recuperar} from '../../data/WeatherAPI/WeatherAPI';
 import { useEffect } from 'react';
 import { useState } from 'react';
 
