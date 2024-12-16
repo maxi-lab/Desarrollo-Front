@@ -2,22 +2,15 @@ import React, { useEffect, useState } from 'react';
 import {AdminGrid} from '../../Components/AdminGrid/AdminGrid';
 import { Heading } from '../../Components/Heading/Headiing';
 import './adminpage.css';
-import { Button, ButtonGroup, filledInputClasses, MenuItem, Select } from '@mui/material';
-
-
-const datoPista = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 14 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 31 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 31 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 11 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+import { Button, ButtonGroup, MenuItem, Select } from '@mui/material';
+import { eliminarPista } from './Helpers/pistasEndPont';
 function AdminPage() {
-  const eliminar=(id)=>{
+  const eliminar=async(id)=>{
+    /* console.log(datos)
+    datos.map(i=>console.log(i.id)) */
+    const pista=datos.find(d=>d.id==id)
+    console.log(pista)
+    await eliminarPista(pista)
     setDatos((prev)=>prev.filter(d=>d.id!==id))
   }
   const pistas = [
@@ -29,7 +22,7 @@ function AdminPage() {
       editable: true,
     },
     {
-      field: 'estado',
+      field: 'abierta',
       headerName: 'Estado',
       width: 150,
       editable: true,
@@ -42,11 +35,16 @@ function AdminPage() {
       editable: true,
     },
     {
-      filed:'eliminar',
+      field:'action',
       headerName:'',
-      with: 200,
+      width: 200,
       renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
     },
+    {field:'act2',
+      headerName:'',
+      width:200,
+      renderCell:(params)=>(<div><Button>Cerrar</Button></div>)
+    }
   ];
   const transportes = [
     { field: 'nombre', headerName: 'Transporte', width: 90 },
@@ -180,19 +178,25 @@ function AdminPage() {
       renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
     },
   ]
-  const [datos,setDatos]=useState(datoPista)
+  const [datos,setDatos]=useState([])
   const [entidades,setEntidades]=useState(pistas)
-/* useEffect(()=>{
+ useEffect(()=>{
   const requestOptions = {
     method: "GET",
     redirect: "follow"
   };
   
   fetch("https://localhost:7268/api/Pista", requestOptions)
-    .then((response) => response.text())
-    .then((result) => console.log(result))
-    .catch((error) => console.error(error))
-},[]) */
+    .then((response) => response.json())
+    .then((result) => {
+      const data= result.map((i,index)=>{
+        i.abierta?i.abierta="Abierta":i.abierta="Cerrada"
+        return {...i,id:index+1}})
+      setDatos(data)
+    })
+    .catch((error) => console.error(error))//atrapa el error
+   
+},[])
   return (
     <div>
         <Heading/>
