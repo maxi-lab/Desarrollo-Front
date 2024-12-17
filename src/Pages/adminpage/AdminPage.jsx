@@ -5,12 +5,29 @@ import './adminpage.css';
 import { Button, ButtonGroup, MenuItem, Select } from '@mui/material';
 import { eliminarPista } from './Helpers/pistasEndPont';
 function AdminPage() {
-  const eliminar=async(id)=>{
-    /* console.log(datos)
-    datos.map(i=>console.log(i.id)) */
-    const pista=datos.find(d=>d.id==id)
-    console.log(pista)
-    await eliminarPista(pista)
+  const [datos,setDatos]=useState([]);
+  useEffect(()=>{
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow"
+    };
+    
+    fetch("https://localhost:7268/api/Pista", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        const data= result.map((i,index)=>{
+          i.abierta?i.abierta="Abierta":i.abierta="Cerrada"
+          return {...i,id:index+1}})
+        setDatos(data)
+        console.log(data)
+      })
+      .catch((error) => console.error(error))//atrapa el error
+     
+  },[])
+  const eliminar=async(p)=>{
+    const id=p.id
+    console.log(p.row.nombre)
+    await eliminarPista(p.row.nombre)  
     setDatos((prev)=>prev.filter(d=>d.id!==id))
   }
   const pistas = [
@@ -38,7 +55,7 @@ function AdminPage() {
       field:'action',
       headerName:'',
       width: 200,
-      renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
+      renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params)}>Eliminar</Button></div>),
     },
     {field:'act2',
       headerName:'',
@@ -178,25 +195,8 @@ function AdminPage() {
       renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
     },
   ]
-  const [datos,setDatos]=useState([])
   const [entidades,setEntidades]=useState(pistas)
- useEffect(()=>{
-  const requestOptions = {
-    method: "GET",
-    redirect: "follow"
-  };
-  
-  fetch("https://localhost:7268/api/Pista", requestOptions)
-    .then((response) => response.json())
-    .then((result) => {
-      const data= result.map((i,index)=>{
-        i.abierta?i.abierta="Abierta":i.abierta="Cerrada"
-        return {...i,id:index+1}})
-      setDatos(data)
-    })
-    .catch((error) => console.error(error))//atrapa el error
-   
-},[])
+
   return (
     <div>
         <Heading/>
