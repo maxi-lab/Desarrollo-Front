@@ -3,8 +3,9 @@ import {AdminGrid} from '../../Components/AdminGrid/AdminGrid';
 import { Heading } from '../../Components/Heading/Headiing';
 import './adminpage.css';
 import { Button, ButtonGroup, MenuItem, Select } from '@mui/material';
-import { eliminarPista } from './Helpers/pistasEndPont';
+import { eliminarPista, alternarEstado } from './Helpers/pistasEndPont';
 function AdminPage() {
+  
   const [datos,setDatos]=useState([]);
   useEffect(()=>{
     const requestOptions = {
@@ -19,12 +20,25 @@ function AdminPage() {
           i.abierta?i.abierta="Abierta":i.abierta="Cerrada"
           return {...i,id:index+1}})
         setDatos(data)
-        console.log(data)
       })
       .catch((error) => console.error(error))//atrapa el error
      
   },[])
-  const eliminar=async(p)=>{
+  const alternarP=async(p)=>{
+    try {
+      await alternarEstado(p.row.nombre);
+      setDatos((prevDatos) =>
+        prevDatos.map((item) =>
+          item.id === p.id
+            ? { ...item, abierta: item.abierta === "Abierta" ? "Cerrada" : "Abierta" }
+            : item
+        )
+      );
+    } catch (error) {
+      console.error('Error toggling state:', error);
+    }
+  }
+  const eliminarP=async(p)=>{
     const id=p.id
     console.log(p.row.nombre)
     await eliminarPista(p.row.nombre)  
@@ -55,12 +69,12 @@ function AdminPage() {
       field:'action',
       headerName:'',
       width: 200,
-      renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params)}>Eliminar</Button></div>),
+      renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminarP(params)}>Eliminar</Button></div>),
     },
     {field:'act2',
       headerName:'',
       width:200,
-      renderCell:(params)=>(<div><Button>Cerrar</Button></div>)
+      renderCell:(params)=>(<div><Button onClick={()=>alternarP(params)}>Cerrar/Abrir</Button></div>)
     }
   ];
   const transportes = [
@@ -209,7 +223,9 @@ function AdminPage() {
           <Button onClick={()=>setEntidades(rescatistas)}>Rescatistas</Button>
         </ButtonGroup>
         <AdminGrid columns={entidades} rows={datos}/>
+        <Button>Agregar</Button>
     </div>
+    
   )
 }
 
