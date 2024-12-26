@@ -4,8 +4,11 @@ import { Heading } from '../../Components/Heading/Headiing';
 import './adminpage.css';
 import { Button, ButtonGroup, MenuItem, Select } from '@mui/material';
 import { eliminarPista, alternarEstado } from './Helpers/pistasEndPont';
+import { eliminarTrasporte,alternarEstadoT } from './Helpers/transporteEndPoint';
 let alternarP;
 let eliminarP;
+let alternarT;
+let eliminarT;
 const pistas = [
   { field: 'nombre', headerName: 'Pista', width: 90 },
   {
@@ -24,6 +27,16 @@ const pistas = [
     field: 'minimo',
     headerName: 'Minimo necesario',
     type: 'number',
+    width: 200,
+    editable: true,
+  },
+  {field:'paradaTerminal',
+    headerName:'Parada terminal',
+    width: 200,
+    editable: true,
+  },
+  {field:'transporte',
+    headerName:'Transporte',
     width: 200,
     editable: true,
   },
@@ -48,7 +61,7 @@ const transportes = [
     editable: true,
   },
   {
-    field: 'estado',
+    field: 'abierta',
     headerName: 'Estado',
     width: 150,
     editable: true,
@@ -72,10 +85,16 @@ const transportes = [
     </Select>)
   },
   {
-    filed:'eliminar',
+    field:'eliminar',
     headerName:'',
     with: 200,
-    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
+    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminarT(params)}>Eliminar</Button></div>),
+  },
+  {
+    field:'alternar',
+    headerName:'',
+    with: 200,
+    renderCell:(params)=>(<div><Button size='small' onClick={()=>alternarT(params)}>Abrir/Cerrar</Button></div>),
   },
 ];
 const paradas=[
@@ -109,11 +128,19 @@ const puntosInteres=[
       </Select>)
   },
   {
-    filed:'eliminar',
+    field:'nombrePardada',
+    headerName:'Parada',
+    width: 200,
+    editable: true
+  },
+
+  {
+    field:'eliminar',
     headerName:'',
     with: 200,
     renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
   },
+  
 ]
 const turistas=[
   { field: 'dni', headerName: 'DNI', width: 90 },
@@ -130,7 +157,7 @@ const turistas=[
     editable: true,
   },
   {
-    field: 'usuario',
+    field: 'userName',
     headerName: 'Usuario',
     type: 'number',
     width: 200,
@@ -158,7 +185,7 @@ const rescatistas=[
     editable: true,
   },
   {
-    field: 'usuario',
+    field: 'userName',
     headerName: 'Usuario',
     type: 'number',
     width: 200,
@@ -175,7 +202,8 @@ function AdminPage() {
 
   const [datos,setDatos]=useState([]);
    
-   alternarP=async(p)=>{
+  alternarP=async(p)=>{
+   
     try {
       await alternarEstado(p.row.nombre);
       setDatos((prevDatos) =>
@@ -195,16 +223,42 @@ function AdminPage() {
     await eliminarPista(p.row.nombre)  
     setDatos((prev)=>prev.filter(d=>d.id!==id))
   }
- 
+
+  alternarT=async(p)=>{ 
+    console.log(p)
+    try {
+      await alternarEstadoT(p.row.nombre);
+      setDatos((prevDatos) =>
+        prevDatos.map((item) =>
+          item.id === p.id
+            ? { ...item, abierta: item.abierta === "Abierta" ? "Cerrada" : "Abierta" }
+            : item
+          )
+      );
+    } catch (error) {
+      console.error('Error toggling state:', error);
+    }
+  }
+  eliminarT=async(p)=>{
+    try {
+    const id=p.id
+    console.log(p.row.nombre)
+    await eliminarTrasporte(p.row.nombre)  
+    setDatos((prev)=>prev.filter(d=>d.id!==id))
+    } catch (error) {
+      console.error('Error deleting:', error);
+    }
+  }
+
   const [entidades,setEntidades]=useState(pistas)
 
-  const endpointMap= new Map();
+  const endpointMap= new Map();//mapea los nombres de las entidades con los nombres de los endpoints
   endpointMap.set(pistas,"Pista");
   endpointMap.set(transportes,"Transporte");
   endpointMap.set(paradas,"Paradas");
   endpointMap.set(puntosInteres,"PuntoInteres")
-  endpointMap.set(turistas,"Turista")
-  endpointMap.set(rescatistas,"Rescatista")
+  endpointMap.set(turistas,"Turista/Turistas")
+  endpointMap.set(rescatistas,"Rescatista/Rescatistas")
   useEffect(()=>{
     console.log(endpointMap.get(entidades));
     const requestOptions = {
