@@ -5,10 +5,19 @@ import './adminpage.css';
 import { Button, ButtonGroup, MenuItem, Select } from '@mui/material';
 import { eliminarPista, alternarEstado } from './Helpers/pistasEndPont';
 import { eliminarTrasporte,alternarEstadoT } from './Helpers/transporteEndPoint';
+import { eliminarParada } from './Helpers/paradasEndPoint';
+import { eliminarPunto } from './Helpers/puntosEndPoint';
+import { eliminarTurista } from './Helpers/turistasEndPont';
+import { eliminarRescatista } from './Helpers/rescatistaEndPoint';
 let alternarP;
 let eliminarP;
 let alternarT;
 let eliminarT;
+let eliminarPa;
+let eliminarPu;
+let eliminarTu;
+let eliminarRe;
+
 const pistas = [
   { field: 'nombre', headerName: 'Pista', width: 90 },
   {
@@ -109,7 +118,7 @@ const paradas=[
     filed:'eliminar',
     headerName:'',
     with: 200,
-    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
+    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminarPa(params)}>Eliminar</Button></div>),
   },
 ];
 const puntosInteres=[
@@ -138,7 +147,7 @@ const puntosInteres=[
     field:'eliminar',
     headerName:'',
     with: 200,
-    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
+    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminarPu(params)}>Eliminar</Button></div>),
   },
   
 ]
@@ -167,7 +176,7 @@ const turistas=[
     filed:'eliminar',
     headerName:'',
     with: 200,
-    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
+    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminarTu(params)}>Eliminar</Button></div>),
   },
 ]
 const rescatistas=[
@@ -195,7 +204,7 @@ const rescatistas=[
     filed:'eliminar',
     headerName:'',
     with: 200,
-    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminar(params.id)}>Eliminar</Button></div>),
+    renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminarRe(params)}>Eliminar</Button></div>),
   },
 ]
 function AdminPage() {
@@ -245,6 +254,43 @@ function AdminPage() {
     console.log(p.row.nombre)
     await eliminarTrasporte(p.row.nombre)  
     setDatos((prev)=>prev.filter(d=>d.id!==id))
+    } catch (error) {
+      console.error('Error deleting:', error);
+    }
+  }
+
+  eliminarPa=async(p)=>{
+    try {
+      await eliminarParada(p.row.nombre)
+      setDatos((prev)=>prev.filter(d=>d.id!==p.id))
+
+    } catch (error) {
+      console.error('Error deleting:', error);
+    }
+  }
+  eliminarPu=async(p)=>{
+    try {
+      await eliminarPunto(p.row.nombre)
+      setDatos((prev)=>prev.filter(d=>d.id!==p.id))
+
+    } catch (error) {
+      console.error('Error deleting:', error);
+    }
+  }
+  eliminarTu=async(p)=>{
+    try {
+      await eliminarTurista(p.row.dni)
+      setDatos((prev)=>prev.filter(d=>d.id!==p.id))
+    } catch (error) {
+      console.error('Error deleting:', error);
+      
+    }
+  }
+  eliminarRe=async(p)=>{
+    try {
+      console.log(p.row.legajo)
+      await eliminarRescatista(p.row.legajo)
+      setDatos((prev)=>prev.filter(d=>d.id!==p.id))
     } catch (error) {
       console.error('Error deleting:', error);
     }
