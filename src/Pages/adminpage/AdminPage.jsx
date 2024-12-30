@@ -9,14 +9,8 @@ import { eliminarParada } from './Helpers/paradasEndPoint';
 import { eliminarPunto } from './Helpers/puntosEndPoint';
 import { eliminarTurista } from './Helpers/turistasEndPont';
 import { eliminarRescatista } from './Helpers/rescatistaEndPoint';
-let alternarP;
-let eliminarP;
-let alternarT;
-let eliminarT;
-let eliminarPa;
-let eliminarPu;
-let eliminarTu;
-let eliminarRe;
+let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange;
+
 
 const pistas = [
   { field: 'nombre', headerName: 'Pista', width: 90 },
@@ -64,12 +58,6 @@ const pistas = [
 const transportes = [
   { field: 'nombre', headerName: 'Transporte', width: 90 },
   {
-    field: 'capacidad',
-    headerName: 'Capacidad',
-    width: 150,
-    editable: true,
-  },
-  {
     field: 'abierta',
     headerName: 'Estado',
     width: 150,
@@ -87,10 +75,10 @@ const transportes = [
     headerName:'Tipo',
     width: 150,
     editable: true,
-    renderCell:(params)=>(<Select>
-    <MenuItem value=""><em>ninguno</em></MenuItem>
-    <MenuItem value="Option 1"><em>Telesilla</em></MenuItem>
-    <MenuItem value="Option 2"><em>Poma</em></MenuItem>
+    renderCell:(params)=>(<Select value={params.row.tipo||2} onChange={(e)=>params.row.tipo=e.target.value}>
+    <MenuItem value="0"><em>Poma</em></MenuItem>
+    <MenuItem value="1"><em>Telesilla</em></MenuItem>
+    <MenuItem value="2"><em>ninguno</em></MenuItem>
     </Select>)
   },
   {
@@ -124,16 +112,21 @@ const paradas=[
 const puntosInteres=[
   { field: 'nombre', headerName: 'Nombre', width: 90 },
   {
-    field: 'tipo',
+    field: 'type',
     headerName: 'Tipo',
-    width: 150,
+    width: 250,
+    heigt: 200, 
     editable: true,
-    renderCell:(params)=>(<Select>
-      <MenuItem value=""><em>ninguno</em></MenuItem>
-      <MenuItem value="Option 1"><em>Rental</em></MenuItem>
-      <MenuItem value="Option 2"><em>Restorante</em></MenuItem>
-      <MenuItem value="Option 2"><em>Centro de atencion</em></MenuItem>
-      <MenuItem value="Option 2"><em>Centro medico</em></MenuItem>
+    renderCell:(params)=>(<Select value={params.row.type||"4"} onChange={(e)=>{console.log(e.target.value)
+      console.log(params.row.type)
+      params.row.type=e.target.value
+      //handleSelectChange(e,params)
+    }}>
+      <MenuItem value="0"><em>Rental</em></MenuItem>
+      <MenuItem value="1"><em>Restorante</em></MenuItem>
+      <MenuItem value="2"><em>Centro de atencion</em></MenuItem>
+      <MenuItem value="3"><em>Centro medico</em></MenuItem>
+      <MenuItem value="4"><em>Ninguno</em></MenuItem>
       </Select>)
   },
   {
@@ -211,6 +204,12 @@ function AdminPage() {
 
   const [datos,setDatos]=useState([]);
    
+  handleSelectChange=(e,p)=>{
+    setDatos((prev)=>{
+      prev.map((i)=>i.id==p.row.id?{...i,type:e.target.value}:i)
+    })
+  }
+
   alternarP=async(p)=>{
    
     try {
@@ -335,7 +334,7 @@ function AdminPage() {
           <Button onClick={()=>setEntidades(turistas)}>Turistas</Button>
           <Button onClick={()=>setEntidades(rescatistas)}>Rescatistas</Button>
         </ButtonGroup>
-        <AdminGrid columns={entidades} rows={datos}/>
+        <AdminGrid columns={entidades} rows={datos} key={entidades.map(e=>e.field).join('-')}/>
         <Button>Agregar</Button>
     </div>
     
