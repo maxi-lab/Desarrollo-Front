@@ -198,9 +198,6 @@ function AdminPage() {
       prev.map((i)=>i.id==p.row.id?{...i,type:e.target.value}:i)
     })
   }
-  const añadir=async()=>{
-
-  }
   alternarP=async(p)=>{
    
     try {
