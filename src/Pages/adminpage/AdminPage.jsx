@@ -10,7 +10,8 @@ import { eliminarPunto } from './Helpers/puntosEndPoint';
 import { eliminarTurista } from './Helpers/turistasEndPont';
 import { eliminarRescatista } from './Helpers/rescatistaEndPoint';
 import AddModal from '../../Components/AdminGrid/AddModal';
-let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange;
+import { eliminarUser,acenderUser,decenderUser } from './Helpers/usersEndPoint';
+let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender;
 
 
 const pistas = [
@@ -189,6 +190,16 @@ const rescatistas=[
     renderCell:(params)=>(<div><Button size='small' onClick={()=>eliminarRe(params)}>Eliminar</Button></div>),
   },
 ]
+
+const usuarios=[
+  { field: 'userName', headerName: 'Usuario', width: 90 },
+  {field:'email',headerName:'Email',width:150},
+  {field:'rol',headerName:'Rol',width:150},
+  {field:'eliminar',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>eliminarUsr(params)}>Eliminar</Button>)},
+  {field:'acender',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>acender(params)}>Acender</Button>)},
+  {field:'decender',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>decender(params)}>Degradar</Button>)}
+
+]
 function AdminPage() {
 
   const [datos,setDatos]=useState([]);
@@ -218,6 +229,22 @@ function AdminPage() {
     console.log(p.row.nombre)
     await eliminarPista(p.row.nombre)  
     setDatos((prev)=>prev.filter(d=>d.id!==id))
+  }
+  eliminarUsr=async(p)=>{
+    const id=p.id
+    console.log(p.row.userName)
+    await eliminarUser(p.row.userName)
+    setDatos((u)=>u.filter(d=>d.id!==id))
+    
+  }
+  acender=async(p)=>{
+    const id=p.id
+    await acenderUser(p.row.userName)
+    
+  }
+  decender=async(p)=>{
+    const id =p.id
+    await decenderUser(p.row.userName)
   }
 
   alternarT=async(p)=>{ 
@@ -292,8 +319,8 @@ function AdminPage() {
   endpointMap.set(puntosInteres,"PuntoInteres")
   endpointMap.set(turistas,"Turista/Turistas")
   endpointMap.set(rescatistas,"Rescatista/Rescatistas")
+  endpointMap.set(usuarios,"User/GetUsers")
   useEffect(()=>{
-    console.log(endpointMap.get(entidades));
     const requestOptions = {
       method: "GET",
       redirect: "follow"
@@ -320,9 +347,10 @@ function AdminPage() {
           <Button onClick={()=>setEntidades(puntosInteres)}>Puntos de Interes</Button>
           <Button onClick={()=>setEntidades(turistas)}>Turistas</Button>
           <Button onClick={()=>setEntidades(rescatistas)}>Rescatistas</Button>
+          <Button onClick={()=>setEntidades(usuarios)}>Usuarios</Button>
         </ButtonGroup>
         <AdminGrid columns={entidades} rows={datos} key={entidades.map(e=>e.field).join('-')}/>
-        <AddModal entidad={endpointMap.get(entidades)}/>
+        <AddModal entidad={endpointMap.get(entidades)}/> 
     </div>
     
   )

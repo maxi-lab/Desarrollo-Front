@@ -17,6 +17,8 @@ import {agregarPunto} from "../../Pages/adminpage/Helpers/puntosEndPoint";
 import { agregarTurista } from "../../Pages/adminpage/Helpers/turistasEndPont";
 import { agregarTransporte } from "../../Pages/adminpage/Helpers/transporteEndPoint";
 import { agregarRescatista } from "../../Pages/adminpage/Helpers/rescatistaEndPoint";
+import { agregarUser } from "../../Pages/adminpage/Helpers/usersEndPoint";
+import { UserForm } from "./UserForm";
 export default function AddModal({entidad}) {
     const [data, setData] = useState({});
     const [open, setOpen] = useState(false);
@@ -37,6 +39,7 @@ export default function AddModal({entidad}) {
     entidadMap.set('Paradas',{form:<ParadasForm saveData={formToModal}/>,nombre:'Parada',action:agregarParada});
     entidadMap.set('Turista/Turistas',{form:<TuristasForm saveData={formToModal}/>,nombre:'Turista',action:agregarTurista});
     entidadMap.set('Rescatista/Rescatistas',{form:<RescatistaForm saveData={formToModal}/>,nombre:'Rescatista',action:agregarRescatista});
+    entidadMap.set('User/GetUsers',{form:<UserForm saveData={formToModal}/>,nombre:'Usuario',action:agregarUser});
    
    return <>
         <Button onClick={handleOpen}><GridAddIcon/></Button> 
@@ -44,8 +47,6 @@ export default function AddModal({entidad}) {
             open={open} onClose={handleClose} aria-labelledby="simple-modal-title" aria-describedby="simple-modal-description">
             <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4, }}>
                 <h2 id="simple-modal-title">Agregar {entidadMap.get(entidad).nombre}</h2>
-                
-                {/* seleccionar el form segun la entidad */}
                 {entidadMap.get(entidad).form}
                 <br />
                 <Button onClick={()=>saveData()}><CheckIcon/></Button>
