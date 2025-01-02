@@ -1,0 +1,6 @@
+export const upMap=new Map()
+upMap.set("Turista","Rescatista")
+upMap.set("Rescatista","Admin")
+export const downMap=new Map()
+downMap.set("Admin","Rescatista")
+downMap.set("Rescatista", "Turista")

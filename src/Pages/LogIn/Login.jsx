@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import Icon from '../../assets/Icon.png';
 import './Login.css';
 import { UserContext } from '../../Context/UserContext';
+import { Heading } from "../../Components/Heading/Headiing";
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -50,12 +51,9 @@ function Login() {
         }
     }
 
-    return (
+    return (<>
+        <Heading/>
         <div className="auth-container">
-            <div id='PinosL'>
-                <img src={Icon} id='icon'></img>
-                <h1 id='AppName'>Los Pinos</h1>
-            </div>
             <div className="form">
             <div id="title">{header()}</div>
             <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -127,7 +125,7 @@ function Login() {
             </p>
         </div>
         </div>
-    );
+        </>);
 }
 
 export default Login;

@@ -5,7 +5,7 @@ import Icon from '../../assets/Icon.png';
 import {useNavigate} from 'react-router-dom';
 import './Info.css';
 import { Heading } from '../../Components/Heading/Headiing';
-import UserGrid from "../../Components/UserGrid/UserGrid";
+import { TrackGrid } from "../../Components/TrackGrid/TrackGrid";
 import { Button, ButtonGroup } from "@mui/material";
 
 
@@ -16,7 +16,7 @@ function Info(){
     
     const renderSection = () => {
         if (activeSection === 'Pistas') {
-          return <UserGrid/>;
+          return <TrackGrid/>;
         } else if (activeSection === 'Cond. del Tiempo') {
           return <Weather />;
         }

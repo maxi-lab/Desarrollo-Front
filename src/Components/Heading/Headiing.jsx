@@ -1,8 +1,4 @@
-
 import '../../Pages/Menu/Menu.css'
-import Login from '../../Pages/LogIn/Login';
-import Info from '../../Pages/Info/Info';
-import App from '../../App';
 import { useNavigate } from 'react-router-dom';
 import Icon from '../../assets/Icon.png';
 import { AppBar, Avatar, Box, Button, ButtonGroup, IconButton, Toolbar, Typography } from '@mui/material';
@@ -15,7 +11,7 @@ export function Heading(params) {
         navigate('/login');
     }
     const rescate=()=>{
-        alert('Rescate en camino')
+        alert('Rescate en camino')//llamar a la API de la ambulancia
     }
     const handleInfoClick = () => {
         navigate('/info');
@@ -36,7 +32,7 @@ export function Heading(params) {
                     variant="outlined"
                     onClick={gestorPistas}
                     size="small"
-                    >GestorPistas
+                    >Panel de administrador
                     </Button>,
                     <Button 
                     color="primary"
