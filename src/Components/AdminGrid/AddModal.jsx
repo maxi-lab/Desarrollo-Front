@@ -19,7 +19,7 @@ import { agregarTransporte } from "../../Pages/adminpage/Helpers/transporteEndPo
 import { agregarRescatista } from "../../Pages/adminpage/Helpers/rescatistaEndPoint";
 import { agregarUser } from "../../Pages/adminpage/Helpers/usersEndPoint";
 import { UserForm } from "./UserForm";
-export default function AddModal({entidad}) {
+export default function AddModal({entidad,add}) {
     const [data, setData] = useState({});
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);

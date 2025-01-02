@@ -11,6 +11,7 @@ import { eliminarTurista } from './Helpers/turistasEndPont';
 import { eliminarRescatista } from './Helpers/rescatistaEndPoint';
 import AddModal from '../../Components/AdminGrid/AddModal';
 import { eliminarUser,acenderUser,decenderUser } from './Helpers/usersEndPoint';
+import { upMap,downMap } from './Helpers/roles';
 let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender;
 
 
@@ -58,7 +59,7 @@ const pistas = [
   }
 ];
 const transportes = [
-  { field: 'nombre', headerName: 'Transporte', width: 90 },
+  { field: 'nombre', headerName: 'Transporte', width: 150 },
   {
     field: 'abierta',
     headerName: 'Estado',
@@ -94,7 +95,7 @@ const transportes = [
   },
 ];
 const paradas=[
-  { field: 'nombre', headerName: 'Parada', width: 90 },
+  { field: 'nombre', headerName: 'Parada', width: 200 },
   {
     field: 'altura',
     headerName: 'Altura',
@@ -109,7 +110,7 @@ const paradas=[
   },
 ];
 const puntosInteres=[
-  { field: 'nombre', headerName: 'Nombre', width: 90 },
+  { field: 'nombre', headerName: 'Nombre', width: 200 },
   {
     field: 'nombreTipo',
     headerName: 'Tipo',
@@ -210,7 +211,6 @@ function AdminPage() {
     })
   }
   alternarP=async(p)=>{
-   
     try {
       await alternarEstado(p.row.nombre);
       setDatos((prevDatos) =>
@@ -238,13 +238,24 @@ function AdminPage() {
     
   }
   acender=async(p)=>{
-    const id=p.id
-    await acenderUser(p.row.userName)
+    try {
+     await acenderUser(p.row.userName)
+      const id=p.id
+      const newRol=upMap.get(p.row.rol)
+      const newDatos=datos.map((u)=>u.id===id?{...u,rol:newRol}:u)
+      console.log(newDatos)
+      setDatos(newDatos) 
     
+    } catch (error) {
+      console.error(error)
+    }
   }
   decender=async(p)=>{
     const id =p.id
     await decenderUser(p.row.userName)
+    const newRol=downMap.get(p.row.rol)
+    const newDatos=datos.map((u)=>u.id===id?{...u,rol:newRol}:u)
+    setDatos(newDatos)
   }
 
   alternarT=async(p)=>{ 
@@ -309,7 +320,7 @@ function AdminPage() {
       console.error('Error deleting:', error);
     }
   }
-
+ 
   const [entidades,setEntidades]=useState(pistas)
 
   const endpointMap= new Map();//mapea los nombres de las entidades con los nombres de los endpoints
@@ -350,7 +361,7 @@ function AdminPage() {
           <Button onClick={()=>setEntidades(usuarios)}>Usuarios</Button>
         </ButtonGroup>
         <AdminGrid columns={entidades} rows={datos} key={entidades.map(e=>e.field).join('-')}/>
-        <AddModal entidad={endpointMap.get(entidades)}/> 
+        <AddModal entidad={endpointMap.get(entidades)} /> 
     </div>
     
   )
