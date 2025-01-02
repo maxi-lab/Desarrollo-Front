@@ -3,15 +3,15 @@ import {AdminGrid} from '../../Components/AdminGrid/AdminGrid';
 import { Heading } from '../../Components/Heading/Headiing';
 import './adminpage.css';
 import { Button, ButtonGroup, MenuItem, Modal, Select } from '@mui/material';
-import { eliminarPista, alternarEstado } from './Helpers/pistasEndPont';
-import { eliminarTrasporte,alternarEstadoT } from './Helpers/transporteEndPoint';
-import { eliminarParada } from './Helpers/paradasEndPoint';
-import { eliminarPunto } from './Helpers/puntosEndPoint';
-import { eliminarTurista } from './Helpers/turistasEndPont';
-import { eliminarRescatista } from './Helpers/rescatistaEndPoint';
+import { eliminarPista, alternarEstado } from '../../Helpers/pistasEndPont'
+import { eliminarTrasporte,alternarEstadoT } from '../../Helpers/transporteEndPoint';
+import { eliminarParada } from '../../Helpers/paradasEndPoint';
+import { eliminarPunto } from '../../Helpers/puntosEndPoint';
+import { eliminarTurista } from '../../Helpers/turistasEndPont';
+import { eliminarRescatista } from '../../Helpers/rescatistaEndPoint';
 import AddModal from '../../Components/AdminGrid/AddModal';
-import { eliminarUser,acenderUser,decenderUser } from './Helpers/usersEndPoint';
-import { upMap,downMap } from './Helpers/roles';
+import { eliminarUser,acenderUser,decenderUser } from '../../Helpers/usersEndPoint';
+import { upMap,downMap } from '../../Helpers/roles';
 let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender;
 
 
