@@ -42,3 +42,35 @@ export function eliminarUser(user){
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
+export async function logIn(credentials){
+const myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+const raw = JSON.stringify({
+  "username": credentials.username,
+  "password": credentials.password
+});
+
+const requestOptions = {
+  method: "POST",
+  headers: myHeaders,
+  body: raw,
+  redirect: "follow"
+};
+
+return fetch("https://localhost:7268/api/User/LogIn", requestOptions)
+  .then((response) => response.json())
+  .then((result) => result)
+  .catch((error) => error);
+ 
+}
+export async function reestablecerPass(u){
+  const requestOptions = {
+    method: "PUT",
+    redirect: "follow"
+  };
+  
+  fetch(`https://localhost:7268/api/User/CambiarPasswd?userName=${u}&newPassword=${u}`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+}
