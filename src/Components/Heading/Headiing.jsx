@@ -6,7 +6,7 @@ import { ThemeProvider} from '@mui/material/styles'
 import theme from '../../styles/Headingstyle/HeadingStyle';
 import { UserContext } from '../../Context/UserContext';
 import { useContext } from 'react';  
-export function Heading(params) {
+export function Heading() {
     const navigate =useNavigate();
     const {user} = useContext(UserContext);
     const handleLoginClick = () => {
@@ -27,35 +27,6 @@ export function Heading(params) {
     const handleWetherClick=()=>{
         navigate('/Weather');
     }
-    const buttons =
-                <ButtonGroup>
-                    <Button
-                    color="primary"
-                    variant="outlined"
-                    onClick={gestorPistas}
-                    size="small"
-                    >Panel de administrador
-                    </Button>
-                    <Button 
-                    color="primary"
-                    variant="outlined"
-                    onClick={handleInfoClick}
-                    size="small"
-                    >Informacion</Button>,
-                    <Button
-                    color="error"
-                    variant="contained"
-                    onClick={rescate}
-                    size="mediun">
-                    Emergencia
-                    </Button>
-                    <Button 
-                    color="primary"
-                    variant="outlined"
-                    onClick={handleLoginClick}
-                    size="large">Login</Button>
-            </ButtonGroup>
-
     return (<>
         <Box >
             <ThemeProvider theme={theme}>
@@ -106,8 +77,3 @@ export function Heading(params) {
              
     </>);
 }
-//.image {
-// width: 100%;
-// height: 100%;
-// object-fit: fill;
-//}
