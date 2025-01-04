@@ -12,8 +12,9 @@ export default function Turista() {
     const [error, setError] = useState(null);
     const {user} = useContext(UserContext);
     const handleSave=()=>{
-        if(nombre==='' || apellido==='' || dni===''){
-            setError('Por favor complete todos los campos')
+        const regex = /[e+\-*/]/;
+        if((nombre==='' || apellido==='' || dni==='')&&!regex.test(dni)){
+            setError('Por favor complete todos los campos con valores validos')
             return
         }
         setError(null)
@@ -28,7 +29,7 @@ export default function Turista() {
             <TextField variant="outlined" label="Nombre" onChange={(e)=>setNombre(e.target.value)} />
             <TextField variant="outlined" label="Apellido" onChange={(e)=>setApellido(e.target.value)}/>
             <TextField variant="outlined" label="DNI" type="number" onChange={(e)=>setDni(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
-            <Button onClick={handleSave}><SaveIcon/></Button>
+            <Button onClick={handleSave} variant="contained"><SaveIcon/></Button>
         </Box>
     </div>
 }

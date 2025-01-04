@@ -28,7 +28,7 @@ export default function LogInForm() {
         <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
             <TextField label="Nombre de usuario" variant="outlined" onChange={(e)=>setUserName(e.target.value)} />
             <TextField label="Contraseña" variant="outlined"  type="password" onChange={(e)=>setPassword(e.target.value)} />
-            <Button onClick={handleLogIn}><LoginIcon/></Button>
+            <Button onClick={handleLogIn} variant="contained"><LoginIcon/></Button>
         </Box>
     
     </div>

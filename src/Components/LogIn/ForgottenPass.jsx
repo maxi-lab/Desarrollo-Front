@@ -13,7 +13,7 @@ export default function ForgottenPass() {
         <h2>Reestablecer contraseña</h2>
         <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
             <TextField variant="outlined" label="Username" onChange={(e)=>setUsername(e.target.value)} />
-            <Button type="submit" onClick={handleRest}><LockResetIcon/></Button>
+            <Button type="submit" onClick={handleRest} variant="contained"><LockResetIcon/></Button>
         </Box>
     
     </div>

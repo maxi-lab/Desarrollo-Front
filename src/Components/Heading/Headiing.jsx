@@ -8,7 +8,7 @@ import { UserContext } from '../../Context/UserContext';
 import { useContext } from 'react';  
 export function Heading() {
     const navigate =useNavigate();
-    const {user} = useContext(UserContext);
+    const {user,setUser} = useContext(UserContext);
     const handleLoginClick = () => {
         navigate('/login');
     }
@@ -24,8 +24,9 @@ export function Heading() {
     const VolverMenu=()=>{
         navigate('/menu');
     }
-    const handleWetherClick=()=>{
-        navigate('/Weather');
+    const cerrarSeccion=()=>{
+        setUser({rol:'',name:'',email:''});
+        VolverMenu();
     }
     return (<>
         <Box >
@@ -64,11 +65,15 @@ export function Heading() {
                     size="mediun">
                     Emergencia
                     </Button>
-                    <Button 
+                    {user.rol===''?<Button 
                     color="primary"
                     variant="outlined"
                     onClick={handleLoginClick}
-                    size="large">Login</Button>
+                    size="large">Iniciar seccion</Button>:<Button color="primary"
+                    variant="outlined"
+                    onClick={cerrarSeccion}
+                    size="large">Cerrar seccion</Button>}
+                    
                 </ButtonGroup>
                 </Toolbar>
             </AppBar>
