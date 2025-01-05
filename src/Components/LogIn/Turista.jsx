@@ -5,6 +5,7 @@ import { useState,useContext } from "react"
 import "./styles.css"
 import { agregarTurista } from "../../Helpers/turistasEndPont";
 import SaveIcon from '@mui/icons-material/Save';
+import { useNavigate } from "react-router-dom";
 export default function Turista() {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
@@ -20,6 +21,7 @@ export default function Turista() {
         setError(null)
         const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':user.name};
         agregarTurista(turista)
+        useNavigate('/menu')
         
     }
     return<div className="form">
@@ -29,7 +31,7 @@ export default function Turista() {
             <TextField variant="outlined" label="Nombre" onChange={(e)=>setNombre(e.target.value)} />
             <TextField variant="outlined" label="Apellido" onChange={(e)=>setApellido(e.target.value)}/>
             <TextField variant="outlined" label="DNI" type="number" onChange={(e)=>setDni(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
-            <Button onClick={handleSave} variant="contained"><SaveIcon/></Button>
+            <Button onClick={handleSave} variant="contained">Guardar <SaveIcon/></Button>
         </Box>
     </div>
 }

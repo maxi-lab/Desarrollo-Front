@@ -7,13 +7,13 @@ import theme from '../../styles/Headingstyle/HeadingStyle';
 import { UserContext } from '../../Context/UserContext';
 import { useContext } from 'react';  
 export function Heading() {
-    const navigate =useNavigate();
+    const navigate =useNavigate();//xq... xq... xq cesar la puta madre
     const {user,setUser} = useContext(UserContext);
     const handleLoginClick = () => {
         navigate('/login');
     }
     const rescate=()=>{
-        alert('Rescate en camino')//llamar a la API de la ambulancia
+        alert('Rescate en camino')
     }
     const handleInfoClick = () => {
         navigate('/info');
@@ -69,10 +69,10 @@ export function Heading() {
                     color="primary"
                     variant="outlined"
                     onClick={handleLoginClick}
-                    size="large">Iniciar seccion</Button>:<Button color="primary"
+                    size="large">Iniciar sesion</Button>:<Button color="primary"
                     variant="outlined"
                     onClick={cerrarSeccion}
-                    size="large">Cerrar seccion</Button>}
+                    size="large">Cerrar sesion</Button>}
                     
                 </ButtonGroup>
                 </Toolbar>

@@ -1,4 +1,4 @@
-export function agregarUser(user){
+export  function agregarUser(user){
     const requestOptions = {
         method: "POST",
         redirect: "follow"

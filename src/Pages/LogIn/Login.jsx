@@ -26,7 +26,7 @@ function Login() {
             <ButtonGroup variant="contained" aria-label="Basic button group" style={{top:'100px', position:'absolute'}}>
                 <Button onClick={() => setIsLogin('login')}>Iniciar sesión</Button>
                 <Button onClick={() => setIsLogin('register')}>Registrarse</Button>
-                <Button onClick={() => setIsLogin('forgotten')}>Reestablecer contraseña</Button>
+                <Button onClick={() => setIsLogin('forgotten')}>Recuperar contraseña</Button>
             </ButtonGroup>
            {formulario()}
         </div>

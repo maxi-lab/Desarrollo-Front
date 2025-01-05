@@ -8,6 +8,7 @@ import './styles.css'
 export default function SignUp() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
+    const [verify,setVerify]=useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState(null);
     const {setUser} = useContext(UserContext);
@@ -16,10 +17,12 @@ export default function SignUp() {
         if(userName==='' || password==='' || email===''){
             setError('Por favor complete todos los campos')
             return
+        }else if (password!==verify) {
+            setError('Las contraseñas no coinciden')
+            return
         } 
         setError(null)
         const user = {'name':userName, 'password':password, 'email':email,'rol':'Turista'};
-        
         agregarUser(user)
         setUser(user)
         setError('Al turista')
@@ -33,9 +36,10 @@ export default function SignUp() {
         {error && <Alert variant="outlined" severity="error">{error}</Alert>}
         <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
             <TextField variant="outlined" label="Nombre de usuario" onChange={(e)=>setUserName(e.target.value)}/>
-            <TextField  variant="outlined" label="Contraseña" type="password" onChange={(e)=>setPassword(e.target.value)} />
+            <TextField  variant="outlined" label="Contraseña" type="password" onChange={(e)=>setPassword(e.target.value)} />{/* verify psw */}
+            <TextField  variant="outlined" label="Verificar contraseña" type="password" onChange={(e)=>setVerify(e.target.value)} />
             <TextField  variant="outlined" label="Correo electronico" type="email" onChange={(e)=>setEmail(e.target.value)} />
-            <Button onClick={handleSignUp} variant="contained" type="submit"><ArrowForwardIcon/> </Button>
+            <Button onClick={handleSignUp} variant="contained" type="submit">Siguernte <ArrowForwardIcon/> </Button>
         </Box>
     
     </div>
