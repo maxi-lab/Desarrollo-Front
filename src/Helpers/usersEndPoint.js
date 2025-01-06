@@ -61,7 +61,6 @@ return fetch("https://localhost:7268/api/User/LogIn", requestOptions)
   .then((response) => response.json())
   .then((result) => result)
   .catch((error) => {throw error});
- 
 }
 export async function reestablecerPass(u){
   const requestOptions = {
