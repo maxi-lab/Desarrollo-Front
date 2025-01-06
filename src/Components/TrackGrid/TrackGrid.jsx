@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,16 +8,25 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-const rows = [
-  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
-  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
-  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
-  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
-  { id: 'Sat', name: 'Dificil', age: 'Cerrada' },
-  
-];
+
 
 export function TrackGrid() {
+  const [pistas,setPistas]=useState([])
+  useEffect(()=>{
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow"
+    };
+    
+    fetch("https://localhost:7268/api/Pista", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result)
+        const data=result.map((p,i)=>{return {...p,id:i+1}})
+        setPistas(data)
+      })
+      .catch((error) => console.error(error));
+  },[])
   return (
     <Box
       sx={{
@@ -39,13 +48,15 @@ export function TrackGrid() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.age}</TableCell>
+            {pistas.map((p)=>{return <>
+              <TableRow key={p.id}>
+                <TableCell>{p.nombre}</TableCell> 
+                <TableCell>{p.dificultad}</TableCell> 
+                <TableCell>{p.abierta?'Abierta':"Cerrada"}</TableCell> 
+
               </TableRow>
-            ))}
+              </>
+            })}
           </TableBody>
         </Table>
       </TableContainer>

@@ -22,17 +22,7 @@ function Info(){
         }
         return null;
       };
-    const buttons = [
-        <ButtonGroup>
-            <Button>
-                asd
-            </Button>,
-            <Button>
-                asd
-            </Button>
-        </ButtonGroup>
-    ]
-    
+
     return(
     <div>
        <Heading/>
@@ -42,6 +32,15 @@ function Info(){
             </Button>,
             <Button onClick={() => setActiveSection ('Cond. del Tiempo')}>
                 Clima
+            </Button>
+            <Button>
+                Transportes
+            </Button>
+            <Button>
+                Paradas
+            </Button>
+            <Button>
+                Puntos de interes
             </Button>
         </ButtonGroup>
         <h1 className="subtitle">{activeSection === 'Pistas' ? 'Estado de las Pistas' : 'Condiciones Climáticas'}</h1>
