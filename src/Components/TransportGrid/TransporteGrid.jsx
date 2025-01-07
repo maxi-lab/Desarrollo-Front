@@ -8,49 +8,39 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 
-
-export function TrackGrid({pistas}) {
-
-  return (
-    <Box
-      sx={{
+export default function TransporteGrid({tranportes}) {
+ 
+    return <>
+    <Box sx={{
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
         margin: 'auto',
         mt: 20,
-      }}
-    >
-      <TableContainer component={Paper}>
+      }}>
+        <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Pista</TableCell>
-              <TableCell>Dificultad</TableCell>
+              <TableCell>Transporte</TableCell>
+              <TableCell>Tipo</TableCell>
               <TableCell>Estado</TableCell>
-              <TableCell>Parada terminal</TableCell>
-              <TableCell>Tramsporte</TableCell>
+              <TableCell>Cantidad</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {pistas.map((p)=>{return <>
-              <TableRow key={p.id}>
-                <TableCell>{p.nombre}</TableCell> 
-                <TableCell>{p.dificultad}</TableCell> 
-                <TableCell>{p.abierta?'Abierta':"Cerrada"}</TableCell> 
-                <TableCell>{p.paradaTerminal}</TableCell>
-                <TableCell>{p.transporte}</TableCell>
-
-              </TableRow>
-              </>
-            })}
+            {tranportes.map((t)=>
+                <TableRow key={t.id}>
+                    <TableCell>{t.nombre}</TableCell>
+                    <TableCell>{t.nomTipo}</TableCell>
+                    <TableCell>{t.abierta?"Abierta":"Cerrada"}</TableCell>
+                    <TableCell>{t.cantidad}</TableCell>
+                </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
     </Box>
-
-  )
+    </>
 }
-
-
