@@ -45,6 +45,8 @@ export function TrackGrid() {
               <TableCell>Pista</TableCell>
               <TableCell>Dificultad</TableCell>
               <TableCell>Estado</TableCell>
+              <TableCell>Parada terminal</TableCell>
+              <TableCell>Tramsporte</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -53,6 +55,8 @@ export function TrackGrid() {
                 <TableCell>{p.nombre}</TableCell> 
                 <TableCell>{p.dificultad}</TableCell> 
                 <TableCell>{p.abierta?'Abierta':"Cerrada"}</TableCell> 
+                <TableCell>{p.paradaTerminal}</TableCell>
+                <TableCell>{p.transporte}</TableCell>
 
               </TableRow>
               </>
