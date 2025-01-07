@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,26 +7,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export default function TransporteGrid() {
-    const [tranportes,setTransporte]=useState([])
-    useEffect(()=>{
-        const requestOptions = {
-            method: "GET",
-            redirect: "follow"
-          };
-          
-          fetch("https://localhost:7268/api/Transporte", requestOptions)
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result)
-                const data=result.map((p,i)=>{return {...p,id:i+1}})
-                setTransporte(data)
-                console.log(tranportes)
 
-            })
-            .catch((error) => console.error(error));
-    },[])
-
+export default function TransporteGrid({tranportes}) {
+ 
     return <>
     <Box sx={{
         width: '100%',

@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,23 +9,8 @@ import Paper from '@mui/material/Paper';
 
 
 
-export function TrackGrid() {
-  const [pistas,setPistas]=useState([])
-  useEffect(()=>{
-    const requestOptions = {
-      method: "GET",
-      redirect: "follow"
-    };
-    
-    fetch("https://localhost:7268/api/Pista", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result)
-        const data=result.map((p,i)=>{return {...p,id:i+1}})
-        setPistas(data)
-      })
-      .catch((error) => console.error(error));
-  },[])
+export function TrackGrid({pistas}) {
+
   return (
     <Box
       sx={{

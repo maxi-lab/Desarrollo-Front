@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,24 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export default function PuntosGrid() {
-    const [puntos,setPuntos]=useState([])
-    useEffect(()=>{
-        const requestOptions = {
-            method: "GET",
-            redirect: "follow"
-          };
-          
-          fetch("https://localhost:7268/api/PuntoInteres", requestOptions)
-            .then((response) => response.json())
-            .then((result) => {
-                console.log(result)
-                const data=result.map((p,i)=>{return {...p,id:i+1}})
-                setPuntos(data)
-                console.log(puntos)
-            })
-            .catch((error) => console.error(error));
-    },[])
+export default function PuntosGrid({puntos}) {
     return <>
         <Box sx={{
         width: '100%',
