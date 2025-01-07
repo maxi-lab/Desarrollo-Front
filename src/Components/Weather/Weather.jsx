@@ -10,6 +10,7 @@ import { Grid2 } from '@mui/material';
 import {recuperar} from '../../data/WeatherAPI/WeatherAPI';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function createData(name, temperature, feelslike, wind, direction) {
   return { name, temperature, feelslike, wind, direction };
@@ -60,7 +61,6 @@ function time(weatherdata){
   }else{
     const weathernow = weatherdata.forecast[0]
     return(weathernow);
-    console.log('Date error')
   }
 }
 
@@ -105,12 +105,14 @@ function arrow(degrees){
 
 export default function Weather() {
   const [weathernow, setWeathernow] = useState(null);
+  const [loading,setLoading]=useState(true)
 
   useEffect(() => {
     const fetchdata = async () => {
       try{
        const weatherdata = await recuperar();
-       setWeathernow(time(weatherdata)); 
+       setWeathernow(time(weatherdata));
+       setLoading(false) 
       }catch (error){
         console.error('Error en el fetch: ', error);
       }
@@ -126,7 +128,12 @@ export default function Weather() {
     createData('Medio', temp(weathernow.mid.temp_c), temp(weathernow.mid.feelslike_c), speed(weathernow.mid.windspd_kmh), arrow(weathernow.mid.winddir_compass)),
     createData('Cima', temp(weathernow.upper.temp_c), temp(weathernow.upper.feelslike_c), speed(weathernow.upper.windspd_kmh), arrow(weathernow.upper.winddir_compass)),
   ]:[];
-
+  if (loading) {
+    return <div style={{display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',}}><CircularProgress /></div>;
+  }
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -19,7 +19,9 @@ function Info(){
     sectionMap.set('Transportes',{tabla:<TransporteGrid tranportes={data}/>,endpoint:'Transporte'})
     sectionMap.set('Puntos de interes',{tabla:<PuntosGrid puntos={data}/>,endpoint:'PuntoInteres'})
     sectionMap.set('Paradas',{tabla:<ParadasGrid paradas={data}/>,endpoint:'Paradas'})
-useEffect(()=>{if(activeSection==='Condiciones Climaticas'){
+useEffect(()=>{
+    setLoading(true)
+    if(activeSection==='Condiciones Climaticas'){
         return
     }
         const requestOptions = {
