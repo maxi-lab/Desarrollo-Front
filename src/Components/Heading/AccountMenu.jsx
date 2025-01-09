@@ -7,8 +7,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useContext, useState } from "react";
 import { UserContext } from '../../Context/UserContext';
@@ -25,6 +23,8 @@ export default function AccountMenu({VolverMenu}){
     const gestorPistas=()=>{
         navigate('/adminpage');
     }
+    const toProfile=()=>navigate("/profile")
+    const toAccount=()=>navigate("/account")
     const rolMenu=()=>{ //despues esto va con un hashmap
         if (user.rol==="Admin") {
             return <>
@@ -89,10 +89,10 @@ export default function AccountMenu({VolverMenu}){
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem onClick={closeMenu}>
+        <MenuItem onClick={toProfile}>
            Perfil
         </MenuItem>
-        <MenuItem onClick={closeMenu}>
+        <MenuItem onClick={toAccount}>
            Mi cuenta
         </MenuItem>
         <Divider />
