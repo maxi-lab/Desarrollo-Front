@@ -5,22 +5,14 @@ import Info from './Pages/Info/Info'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { UserProvider } from './Context/UserContext';
 import AdminPage from './Pages/AdminPage/AdminPage';
+import AppRouter from './Router/AppRouter';
 
 function App() {
-  // Estado para manejar qué sección está activa
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
   return (  
     <UserProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Menu />} />
-        <Route path="/Login" element={<Login onLogin={() => {}} />} />
-        <Route path='/Info' element={<Info onInfo={() => {}} />} />
-        <Route path='/AdminPage' element={<AdminPage onAdminPage={() => {}} />} />
-        <Route path='/Menu' element={<Menu onMenu={() => {}} />} />
-      </Routes>
-    </Router>
+      <AppRouter/>
     </UserProvider>
   );
 }
