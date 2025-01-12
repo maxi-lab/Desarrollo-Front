@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Heading } from "../../Components/Heading/Headiing";
 import { UserContext } from "../../Context/UserContext";
 import List from '@mui/material/List';
@@ -6,9 +6,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { Button, CircularProgress } from "@mui/material";
+import ChangePassForm from "../../Components/ChangePassForm/ChangePassForm";
 
 export default function AccountPage(){
     const {user}=useContext(UserContext)
+    const [chamge,setChamge]=useState(false)
     const style = {
         py: 0,
         width: '100%',
@@ -31,6 +33,7 @@ export default function AccountPage(){
       </ListItem>
       
         </List>
-        <Button>Restablecer contraseña</Button>
+        <Button onClick={()=>setChamge(true)}>Restablecer contraseña</Button>
+        {chamge?<ChangePassForm/>:''}
     </>
 }

@@ -23,9 +23,9 @@ export default function ProfilePage (){
             .then((result) => {setProfile(result)
                 setIsLoading(false)
             })
-            .catch((error) => {console.error(error)
+            .catch((error) => {
                 setIsLoading(false)
-                setError(error)
+                setError("No hay un perfil asociado a tu usuario")
             });
     },[])
     const style = {
@@ -44,9 +44,13 @@ export default function ProfilePage (){
               height: '100vh',}}><CircularProgress />
               </div>
       }
-      if(setError!=null){
-        return<><h1>error</h1></>
+      if (profile.nombre==null) {
+        return <>
+          <Heading/>
+          <h1>Perfil no encontrado </h1>
+        </>
       }
+      
       //tengo que corregir la API
     return<>
         <Heading/>
