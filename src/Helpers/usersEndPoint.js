@@ -73,3 +73,14 @@ export async function reestablecerPass(u){
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
+export async function cambiarPass(u,newPass){
+  const requestOptions = {
+    method: "PUT",
+    redirect: "follow"
+  };
+  
+  fetch(`https://localhost:7268/api/User/CambiarPasswd?userName=${u}&newPassword=${newPass}`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+}
