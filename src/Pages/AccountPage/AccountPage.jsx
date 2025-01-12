@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import { Button, CircularProgress } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import ChangePassForm from "../../Components/ChangePassForm/ChangePassForm";
 
 export default function AccountPage(){
@@ -22,6 +22,7 @@ export default function AccountPage(){
       };
     return <>
         <Heading/>
+        <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
         <h1>Cuenta</h1>
         <List sx={style}>
       <ListItem>
@@ -35,5 +36,7 @@ export default function AccountPage(){
         </List>
         <Button onClick={()=>setChamge(true)}>Restablecer contraseña</Button>
         {chamge?<ChangePassForm/>:''}
+        </Box>
+        
     </>
 }

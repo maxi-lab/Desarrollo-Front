@@ -38,11 +38,15 @@ export default function ProfilePage (){
         backgroundColor: 'background.paper',
       };
       if (isLoading){
-        return <div style={{display: 'flex',
+        return <>
+        <Heading/>
+          <div style={{display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              height: '100vh',}}><CircularProgress />
+              height: '100vh',}}>
+                <CircularProgress />
               </div>
+        </>
       }
       if (profile.nombre==null) {
         return <>
