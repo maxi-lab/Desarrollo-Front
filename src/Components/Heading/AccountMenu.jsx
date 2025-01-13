@@ -33,11 +33,18 @@ export default function AccountMenu({VolverMenu}){
                 </MenuItem>
             </>
         }
-        return null
+        return <>
+          <MenuItem onClick={toAsistencias}>
+            Mis asistencias
+          </MenuItem>
+        </>
     }
     const cerrarSeccion=()=>{
         setUser({rol:'',userName:'',email:''});
         VolverMenu();
+    }
+    const toAsistencias=()=>{
+      navigate('/asist')
     }
     return <>
     <Tooltip title="Perfil">
