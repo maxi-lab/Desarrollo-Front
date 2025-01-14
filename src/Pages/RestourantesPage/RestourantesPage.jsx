@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Heading } from "../../Components/Heading/Headiing";
 import RestoList from "../../Components/RestoList/RestoList";
+import { Box, Typography } from "@mui/material";
 const Restorantes=[{id:1,nombre:"ifeiw",calificacion:5},{id:2,nombre:"ifede",calificacion:4},{id:3,nombre:"de",calificacion:3}]
 
 export default function RestorantesPage(){
@@ -23,7 +24,24 @@ export default function RestorantesPage(){
     },[])
     return <>
     <Heading/>
-    <h1>Resto</h1>
-    <RestoList restos={restorantes}/>
+    <Box component="section" sx={{ p: 2, border: '1px dashed grey',width: 500,
+          maxHeight: 550 ,
+          display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 'auto',
+        bgcolor:'skyblue',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        borderRadius:3,
+        flexDirection: 'column',}}>
+        <div>
+        <Typography variant="h4" component='h1'>Restorantes</Typography>
+        <RestoList restos={restorantes}/>
+        </div>
+    </Box>
+    
     </>
 }
