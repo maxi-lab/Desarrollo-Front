@@ -8,8 +8,9 @@ import { UserContext } from '../../Context/UserContext';
 import { useContext } from 'react';  
 import AccountMenu from './AccountMenu';
 export function Heading() {
-    const navigate =useNavigate();//xq... xq... xq cesar la puta madre
+    const navigate =useNavigate();
     const {user,setUser} = useContext(UserContext);
+    const handleRestos=()=>navigate('/restos')
     const handleLoginClick = () => {
         navigate('/login');
     }
@@ -47,7 +48,12 @@ export function Heading() {
                     </Typography>
                 </IconButton>
                 <Typography sx={{ flexGrow: 1,mr:2 }}/>
-                <ButtonGroup>                    
+                <ButtonGroup><Button 
+                    color="primary"
+                    variant="outlined"
+                    onClick={handleRestos}
+                    size="small"
+                    >Restorantes</Button>,                    
                     <Button 
                     color="primary"
                     variant="outlined"
