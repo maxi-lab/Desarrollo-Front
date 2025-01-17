@@ -7,6 +7,7 @@ import theme from '../../styles/Headingstyle/HeadingStyle';
 import { UserContext } from '../../Context/UserContext';
 import { useContext } from 'react';  
 import AccountMenu from './AccountMenu';
+import SolicitudRescate from './SolicitudRescate';
 export function Heading() {
     const navigate =useNavigate();
     const {user,setUser} = useContext(UserContext);
@@ -15,7 +16,9 @@ export function Heading() {
         navigate('/login');
     }
     const rescate=()=>{
-        alert('Rescate en camino')
+        // pedir la pista y crear la solicitud
+
+        alert('en camino')
     }
     const handleInfoClick = () => {
         navigate('/info');
@@ -60,13 +63,7 @@ export function Heading() {
                     onClick={handleInfoClick}
                     size="small"
                     >Informacion</Button>,
-                    <Button
-                    color="error"
-                    variant="contained"
-                    onClick={rescate}
-                    size="mediun">
-                    Emergencia
-                    </Button>
+                    <SolicitudRescate/>
                     {user.rol===''?<Button 
                     color="primary"
                     variant="outlined"
