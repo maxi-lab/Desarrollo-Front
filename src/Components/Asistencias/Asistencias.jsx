@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../../Context/UserContext";
 import { TableBody, TableCell, TableHead, TableRow,Box,Table, Button } from "@mui/material";
+import AgregarModal from "./AgregarModal";
 
 
 export default function Asistencias(){
     const [asistencias,setAsistencias]=useState([])
+    const [legajo,setLegajo]=useState(0)
     const {user}=useContext(UserContext)
     useEffect(()=>{
         const requestOptions = {
@@ -17,6 +19,7 @@ export default function Asistencias(){
             .then((result) => {console.log(result)
                 let d=result.filter(r=>r.rescatista.userName===user.userName)
                 d=d.map((a,i)=>{return {...a,id:i+1}})
+                setLegajo(d[0].rescatista.legajo)
                 setAsistencias(d)
             })
             .catch((error) => console.error(error));
@@ -42,6 +45,7 @@ export default function Asistencias(){
                     </TableRow>)}
                 </TableBody>
             </Table>
+            <AgregarModal leg={legajo}/>
         </Box>
     </>
 }
