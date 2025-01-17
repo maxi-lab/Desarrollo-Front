@@ -7,7 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Grid2 } from '@mui/material';
-import {recuperar} from '../../data/WeatherAPI/WeatherAPI';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -108,17 +107,21 @@ export default function Weather() {
   const [loading,setLoading]=useState(true)
 
   useEffect(() => {
-    const fetchdata = async () => {
-      try{
-       const weatherdata = await recuperar();
-       setWeathernow(time(weatherdata));
-       setLoading(false) 
-      }catch (error){
-        console.error('Error en el fetch: ', error);
-      }
-      };
-
-    fetchdata();
+    const requestOptions = {
+      method: "GET",
+      redirect: "follow"
+    };
+    
+    fetch("https://api.weatherunlocked.com/api/resortforecast/54884003?app_id=30129f08&app_key=d9734555a33fbf13252c9234f2619bef", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        const d=time(result)
+        console.log(d)
+        setWeathernow(d)
+        console.log(weathernow)
+        setLoading(false)
+      })
+      .catch((error) => console.error(error));
   },[]);
 
   console.log(weathernow);

@@ -20,10 +20,11 @@ function Info(){
     sectionMap.set('Puntos de interes',{tabla:<PuntosGrid puntos={data}/>,endpoint:'PuntoInteres'})
     sectionMap.set('Paradas',{tabla:<ParadasGrid paradas={data}/>,endpoint:'Paradas'})
 useEffect(()=>{
-    setLoading(true)
+    
     if(activeSection==='Condiciones Climaticas'){
-        return
+        return 
     }
+    setLoading(true)
         const requestOptions = {
             method: "GET",
             redirect: "follow"
