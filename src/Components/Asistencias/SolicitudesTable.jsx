@@ -1,9 +1,11 @@
 import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { atenderSolicitud } from "../../Helpers/solicitudEndPoint";
+import { UserContext } from "../../Context/UserContext";
 
 export default function Solicitudes(){
     const [solicitudes,setSolicitudes]=useState([])
+    const {user}=useContext(UserContext)
     const handleAcudir=(id)=>{
         const s=solicitudes.find((s)=>s.id===id)
         console.log(s)
@@ -18,8 +20,11 @@ export default function Solicitudes(){
         }))
     }
     useEffect(()=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
+            headers:myHeaders,
             redirect: "follow"
           };
           

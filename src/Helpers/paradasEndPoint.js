@@ -1,6 +1,9 @@
-export function eliminarParada(parada) {
+export function eliminarParada(parada,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
+        headers:myHeaders,
         redirect: "follow"
       };
       
@@ -10,9 +13,12 @@ export function eliminarParada(parada) {
         .catch((error) => console.error(error));
     
 }
-export function agregarParada(parada){
+export function agregarParada(parada,token){
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
+    headers:myHeaders,
     redirect: "follow"
   };
   

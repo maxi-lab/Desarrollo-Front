@@ -9,8 +9,11 @@ export default function Asistencias(){
     const [legajo,setLegajo]=useState(0)
     const {user}=useContext(UserContext)
     useEffect(()=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
+            headers:myHeaders,
             redirect: "follow"
           };
           
@@ -45,7 +48,7 @@ export default function Asistencias(){
                     </TableRow>)}
                 </TableBody>
             </Table>
-            <AgregarModal leg={legajo}/>
+            <AgregarModal leg={legajo} token={user.token}/>
         </Box>
     </>
 }

@@ -1,6 +1,9 @@
-export async function eliminarPista(pista) {
+export async function eliminarPista(pista,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
+        headers:myHeaders,
         redirect: "follow"
       };
       
@@ -9,9 +12,12 @@ export async function eliminarPista(pista) {
         .then((result) => console.log(result))
         .catch((error) => console.error(error));    
 }
-export async function alternarEstado(pista) {
+export async function alternarEstado(pista,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "PUT",
+    headers:myHeaders,
     redirect: "follow"
   };
   

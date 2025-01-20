@@ -9,9 +9,12 @@ export  function agregarUser(user){
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
-export function acenderUser(user){
+export function acenderUser(user,token){
+  const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "POST",
+        headers:myHeaders,
         redirect: "follow"
       };
       
@@ -20,9 +23,12 @@ export function acenderUser(user){
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
-export function decenderUser(user){
+export function decenderUser(user,token){
+  const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
+    headers:myHeaders,
     redirect: "follow"
   };
   
@@ -31,9 +37,12 @@ export function decenderUser(user){
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
-export function eliminarUser(user){
+export function eliminarUser(user,token){
+  const myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
+        headers:myHeaders,
         redirect: "follow"
       };
       

@@ -1,6 +1,6 @@
 import { TextField } from '@mui/material';
 import { useState } from 'react';
-export function UserForm({saveData}) {
+export default function UserForm({saveData}) {
     const [data, setData] = useState({name:'',password:'',email:''});
 
     const handleNombre=(e)=>{
