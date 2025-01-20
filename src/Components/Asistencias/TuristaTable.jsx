@@ -7,8 +7,11 @@ export default function TuristaTable (){
     const [asistencias,setAsistencias]=useState([])
     const {user}=useContext(UserContext)
     useEffect(()=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
+            headers:myHeaders,
             redirect: "follow"
           };
           

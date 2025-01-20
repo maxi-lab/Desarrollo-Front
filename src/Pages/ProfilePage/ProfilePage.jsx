@@ -13,8 +13,12 @@ export default function ProfilePage (){
     const [isLoading,setIsLoading]=useState(true)
     const [error,setError]=useState(null)
     useEffect(()=>{
+      console.log(user.token)
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
+            headers:myHeaders,
             redirect: "follow"
           };
           
@@ -48,10 +52,10 @@ export default function ProfilePage (){
               </div>
         </>
       }
-      if (profile.nombre==null) {
+      if (profile==null) {
         return <>
           <Heading/>
-          <h1>Perfil no encontrado </h1>
+          <h1>{error} </h1>
         </>
       }
       

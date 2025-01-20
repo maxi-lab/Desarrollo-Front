@@ -2,7 +2,7 @@ import { Box, Button, Modal, TextField } from "@mui/material"
 import { useState } from "react"
 import { crearAsistencia } from "../../Helpers/asistenciaEndPoint"
 
-export default function AgregarModal({leg}){
+export default function AgregarModal({leg,token}){
 
     const [open,setOpen]=useState(false)
     const [dni,setDni]=useState('')
@@ -11,7 +11,7 @@ export default function AgregarModal({leg}){
     const cerrar=()=>setOpen(false)
     const handleAgregar=()=>{
         const a={dni:dni,legajo:leg,nomPista:pista}
-        crearAsistencia(a)
+        crearAsistencia(a,token)
         cerrar()
 
     }

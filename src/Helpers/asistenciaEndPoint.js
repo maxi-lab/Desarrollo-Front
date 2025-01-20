@@ -1,6 +1,9 @@
-export function crearAsistencia(a){
+export function crearAsistencia(a,token){
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "POST",
+        headers:myHeaders,
         redirect: "follow"
       };
       

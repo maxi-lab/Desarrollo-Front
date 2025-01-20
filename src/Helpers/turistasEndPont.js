@@ -1,6 +1,9 @@
-export function eliminarTurista(dni) {
+export function eliminarTurista(dni,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
+        headers:myHeaders,
         redirect: "follow"
       };
       
@@ -10,9 +13,12 @@ export function eliminarTurista(dni) {
         .catch((error) => console.error(error));
     
 }
- export function agregarTurista(turista) {
+ export function agregarTurista(turista,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
+    headers:myHeaders,
     redirect: "follow"
   };
   

@@ -9,9 +9,12 @@ export function eliminarRescatista(legajo) {
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
-export function agregarRescatista(rescatista) {
+export function agregarRescatista(rescatista,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
+    headers:myHeaders,
     redirect: "follow"
   };
   
