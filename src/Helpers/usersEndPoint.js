@@ -73,22 +73,25 @@ return fetch("https://localhost:7268/api/User/LogIn", requestOptions)
 }
 export async function reestablecerPass(u){
   const requestOptions = {
-    method: "PUT",
+    method: "PATCH",
     redirect: "follow"
   };
   
-  fetch(`https://localhost:7268/api/User/CambiarPasswd?userName=${u}&newPassword=${u}`, requestOptions)
+  fetch(`https://localhost:7268/api/User?u=${u}`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
-export async function cambiarPass(u,newPass){
+export async function cambiarPass(u,oldPass,newPass,token){
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "PUT",
+    headers:myHeaders,
     redirect: "follow"
   };
   
-  fetch(`https://localhost:7268/api/User/CambiarPasswd?userName=${u}&newPassword=${newPass}`, requestOptions)
+  fetch(`https://localhost:7268/api/User/CambiarPasswd?userName=${u}&oldPass=${oldPass}&newPassword=${newPass}`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
