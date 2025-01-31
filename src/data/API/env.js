@@ -1,0 +1,1 @@
+export const API_URL_BACKEND = "http://centroski.somee.com/api/";
