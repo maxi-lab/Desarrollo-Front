@@ -1,10 +1,11 @@
+import { API_URL_BACKEND } from "../data/API/env";
 export function eliminarParada(parada) {
     const requestOptions = {
         method: "DELETE",
         redirect: "follow"
       };
       
-      fetch(`https://localhost:7268/api/Paradas?nombre=${parada}`, requestOptions)
+      fetch(`${API_URL_BACKEND}Paradas?nombre=${parada}`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
@@ -16,7 +17,7 @@ export function agregarParada(parada){
     redirect: "follow"
   };
   
-  fetch(`https://localhost:7268/api/Paradas?altura=${parada.altura}&nombre=${parada.nombre}\n`, requestOptions)
+  fetch(`${API_URL_BACKEND}Paradas?altura=${parada.altura}&nombre=${parada.nombre}\n`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
