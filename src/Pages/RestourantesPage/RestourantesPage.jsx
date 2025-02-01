@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Heading } from "../../Components/Heading/Headiing";
 import RestoList from "../../Components/RestoList/RestoList";
 import { Box, Typography } from "@mui/material";
+import { API_URL_BACKEND } from "../../data/API/env";
 const Restorantes=[{id:1,nombre:"ifeiw",calificacion:5},{id:2,nombre:"ifede",calificacion:4},{id:3,nombre:"de",calificacion:3}]
 
 export default function RestorantesPage(){
@@ -12,7 +13,7 @@ export default function RestorantesPage(){
             redirect: "follow"
           };
           
-          fetch("https://localhost:7268/api/PuntoInteres", requestOptions)
+          fetch(`${API_URL_BACKEND}PuntoInteres`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 let data=result.filter(r=>r.nombreTipo==="Restorante")

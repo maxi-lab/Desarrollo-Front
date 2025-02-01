@@ -10,9 +10,13 @@ export  function agregarUser(user){
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
-export function acenderUser(user){
+export function acenderUser(user,token){
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "POST",
+        headers: myHeaders,
         redirect: "follow"
       };
       
@@ -21,9 +25,13 @@ export function acenderUser(user){
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
-export function decenderUser(user){
+export function decenderUser(user,token){
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
+    headers: myHeaders,
     redirect: "follow"
   };
   
@@ -32,9 +40,13 @@ export function decenderUser(user){
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
-export function eliminarUser(user){
+export function eliminarUser(user,token){
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
+        headers: myHeaders,
         redirect: "follow"
       };
       
@@ -65,22 +77,26 @@ return fetch(`${API_URL_BACKEND}User/LogIn`, requestOptions)
 }
 export async function reestablecerPass(u){
   const requestOptions = {
-    method: "PUT",
+    method: "PATCH",
     redirect: "follow"
   };
   
-  fetch(`${API_URL_BACKEND}User/CambiarPasswd?userName=${u}&newPassword=${u}`, requestOptions)
+  fetch(`${API_URL_BACKEND}User?u=${u}`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
-export async function cambiarPass(u,newPass){
+export async function cambiarPass(u,newPass,oldPass,token){
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "PUT",
+    headers: myHeaders,
     redirect: "follow"
   };
   
-  fetch(`${API_URL_BACKEND}User/CambiarPasswd?userName=${u}&newPassword=${newPass}`, requestOptions)
+  fetch(`${API_URL_BACKEND}User/CambiarPasswd?userName=${u}&oldPass=${oldPass}&newPassword=${newPass}`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));

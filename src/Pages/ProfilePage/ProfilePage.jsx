@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { CircularProgress } from "@mui/material";
+import { API_URL_BACKEND } from "../../data/API/env";
 
 export default function ProfilePage (){
     const [profile,setProfile]=useState(null)
@@ -13,12 +14,16 @@ export default function ProfilePage (){
     const [isLoading,setIsLoading]=useState(true)
     const [error,setError]=useState(null)
     useEffect(()=>{
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+      myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
+            headers: myHeaders,
             redirect: "follow"
           };
           
-          fetch(`https://localhost:7268/api/User/GetProfile?userName=${user.userName}`, requestOptions)
+          fetch(`${API_URL_BACKEND}User/GetProfile?userName=${user.userName}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {setProfile(result)
                 setIsLoading(false)

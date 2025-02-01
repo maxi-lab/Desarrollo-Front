@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { GridAddIcon } from "@mui/x-data-grid";
-import { act, useState } from "react";
+import { act, useContext, useState } from "react";
 import { Box } from "@mui/system";
 import Modal from "@mui/material/Modal";
 import PistaForm from "./PistaForm";
@@ -19,17 +19,20 @@ import { agregarTransporte } from "../../Helpers/transporteEndPoint";
 import { agregarRescatista } from "../../Helpers/rescatistaEndPoint";
 import { agregarUser } from "../../Helpers/usersEndPoint";
 import { UserForm } from "./UserForm";
+import { UserContext } from "../../Context/UserContext";
 export default function AddModal({entidad,add}) {
+    const {user} = useContext(UserContext);
     const [data, setData] = useState({});
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     const formToModal=(formData)=>{
         setData(formData);
     }
 
     const saveData=async ()=>{
-        entidadMap.get(entidad).action(data);
+        entidadMap.get(entidad).action(data,user.token);
         handleClose();
     }
     const entidadMap = new Map();

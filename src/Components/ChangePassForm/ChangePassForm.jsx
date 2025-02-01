@@ -14,7 +14,7 @@ export default function ChangePassForm(){
         }
         try{
             await logIn(credentials)
-            await cambiarPass(user.userName,newPass);
+            await cambiarPass(user.userName,newPass,credentials.password,user.token);
         }catch{
             console.error("todo mal")
         }

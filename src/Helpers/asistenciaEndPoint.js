@@ -1,7 +1,11 @@
 import { API_URL_BACKEND } from "../data/API/env";
-export function crearAsistencia(a){
+export function crearAsistencia(a,token){
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "POST",
+        headers: myHeaders,
         redirect: "follow"
       };
       

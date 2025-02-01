@@ -10,10 +10,13 @@ export function crearSolicitud(nomPista){
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
-export function atenderSolicitud(codigo){
-
+export function atenderSolicitud(codigo,token){
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "PUT",
+    headers: myHeaders,
     redirect: "follow"
   };
   

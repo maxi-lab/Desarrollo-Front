@@ -1,7 +1,11 @@
 import { API_URL_BACKEND } from "../data/API/env";
-export function eliminarPunto(punto) {
+export function eliminarPunto(punto,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
+        headers: myHeaders,
         redirect: "follow"
       };
       
@@ -10,9 +14,13 @@ export function eliminarPunto(punto) {
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
-export function agregarPunto(punto) {
+export function agregarPunto(punto,token) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
+    headers: myHeaders,
     redirect: "follow"
   };
   

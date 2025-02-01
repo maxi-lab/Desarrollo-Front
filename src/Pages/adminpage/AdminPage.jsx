@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {AdminGrid} from '../../Components/AdminGrid/AdminGrid';
 import { Heading } from '../../Components/Heading/Headiing';
 import './adminpage.css';
@@ -12,6 +12,8 @@ import { eliminarRescatista } from '../../Helpers/rescatistaEndPoint';
 import AddModal from '../../Components/AdminGrid/AddModal';
 import { eliminarUser,acenderUser,decenderUser } from '../../Helpers/usersEndPoint';
 import { upMap,downMap } from '../../Helpers/roles';
+import { API_URL_BACKEND } from '../../data/API/env';
+import { UserContext } from '../../Context/UserContext';
 let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender;
 
 
@@ -204,6 +206,7 @@ const usuarios=[
 function AdminPage() {
 
   const [datos,setDatos]=useState([]);
+  const {user}=useContext(UserContext)
 
   handleSelectChange=(e,p)=>{
     setDatos((prev)=>{
@@ -227,19 +230,19 @@ function AdminPage() {
   eliminarP=async(p)=>{
     const id=p.id
     console.log(p.row.nombre)
-    await eliminarPista(p.row.nombre)  
+    await eliminarPista(p.row.nombre,user.token)  
     setDatos((prev)=>prev.filter(d=>d.id!==id))
   }
   eliminarUsr=async(p)=>{
     const id=p.id
     console.log(p.row.userName)
-    await eliminarUser(p.row.userName)
+    await eliminarUser(p.row.userName,user.token)
     setDatos((u)=>u.filter(d=>d.id!==id))
     
   }
   acender=async(p)=>{
     try {
-     await acenderUser(p.row.userName)
+     await acenderUser(p.row.userName,user.token)
       const id=p.id
       const newRol=upMap.get(p.row.rol)
       const newDatos=datos.map((u)=>u.id===id?{...u,rol:newRol}:u)
@@ -252,7 +255,7 @@ function AdminPage() {
   }
   decender=async(p)=>{
     const id =p.id
-    await decenderUser(p.row.userName)
+    await decenderUser(p.row.userName,user.token)
     const newRol=downMap.get(p.row.rol)
     const newDatos=datos.map((u)=>u.id===id?{...u,rol:newRol}:u)
     setDatos(newDatos)
@@ -261,7 +264,7 @@ function AdminPage() {
   alternarT=async(p)=>{ 
     console.log(p)
     try {
-      await alternarEstadoT(p.row.nombre);
+      await alternarEstadoT(p.row.nombre,user.token);
       setDatos((prevDatos) =>
         prevDatos.map((item) =>
           item.id === p.id
@@ -277,7 +280,7 @@ function AdminPage() {
     try {
     const id=p.id
     console.log(p.row.nombre)
-    await eliminarTrasporte(p.row.nombre)  
+    await eliminarTrasporte(p.row.nombre,user.token)  
     setDatos((prev)=>prev.filter(d=>d.id!==id))
     } catch (error) {
       console.error('Error deleting:', error);
@@ -286,7 +289,7 @@ function AdminPage() {
 
   eliminarPa=async(p)=>{
     try {
-      await eliminarParada(p.row.nombre)
+      await eliminarParada(p.row.nombre,user.token)
       setDatos((prev)=>prev.filter(d=>d.id!==p.id))
 
     } catch (error) {
@@ -295,7 +298,7 @@ function AdminPage() {
   }
   eliminarPu=async(p)=>{
     try {
-      await eliminarPunto(p.row.nombre)
+      await eliminarPunto(p.row.nombre,user.token)
       setDatos((prev)=>prev.filter(d=>d.id!==p.id))
 
     } catch (error) {
@@ -304,7 +307,7 @@ function AdminPage() {
   }
   eliminarTu=async(p)=>{
     try {
-      await eliminarTurista(p.row.dni)
+      await eliminarTurista(p.row.dni,user.token)
       setDatos((prev)=>prev.filter(d=>d.id!==p.id))
     } catch (error) {
       console.error('Error deleting:', error);
@@ -314,7 +317,7 @@ function AdminPage() {
   eliminarRe=async(p)=>{
     try {
       console.log(p.row.legajo)
-      await eliminarRescatista(p.row.legajo)
+      await eliminarRescatista(p.row.legajo,user.token)
       setDatos((prev)=>prev.filter(d=>d.id!==p.id))
     } catch (error) {
       console.error('Error deleting:', error);
@@ -332,12 +335,16 @@ function AdminPage() {
   endpointMap.set(rescatistas,"Rescatista/Rescatistas")
   endpointMap.set(usuarios,"User/GetUsers")
   useEffect(()=>{
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${user.token}`);
     const requestOptions = {
       method: "GET",
+      headers: myHeaders,
       redirect: "follow"
     };
     
-    fetch(`https://localhost:7268/api/${endpointMap.get(entidades)}`, requestOptions)
+    fetch(`${API_URL_BACKEND}${endpointMap.get(entidades)}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         const data= result.map((i,index)=>{
