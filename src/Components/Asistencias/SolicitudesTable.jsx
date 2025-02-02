@@ -1,13 +1,15 @@
 import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useContext } from "react";
 import { atenderSolicitud } from "../../Helpers/solicitudEndPoint";
-
+import { UserContext } from "../../Context/UserContext";
+import { API_URL_BACKEND } from "../../data/API/env";
 export default function Solicitudes(){
     const [solicitudes,setSolicitudes]=useState([])
+    const {user}=useContext(UserContext)
     const handleAcudir=(id)=>{
         const s=solicitudes.find((s)=>s.id===id)
         console.log(s)
-        atenderSolicitud(s.codigo)
+        atenderSolicitud(s.codigo,user.token)
         setSolicitudes((prev)=>prev.map((p)=>{
             if(p==s)
             {
@@ -18,12 +20,16 @@ export default function Solicitudes(){
         }))
     }
     useEffect(()=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
+            headers: myHeaders,
             redirect: "follow"
           };
           
-          fetch("https://localhost:7268/api/Solicitud", requestOptions)
+          fetch(`${API_URL_BACKEND}Solicitud`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
                 const d=result.map((r,i)=>{return {...r,id:i+1}})

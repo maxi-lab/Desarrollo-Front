@@ -1,17 +1,19 @@
 import { Box, Button, Modal, TextField } from "@mui/material"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { crearAsistencia } from "../../Helpers/asistenciaEndPoint"
+import { UserContext } from "../../Context/UserContext"
 
 export default function AgregarModal({leg}){
 
     const [open,setOpen]=useState(false)
+    const {user}=useContext(UserContext)
     const [dni,setDni]=useState('')
     const [pista,setPista]=useState('')
     const abrir=()=>setOpen(true)
     const cerrar=()=>setOpen(false)
     const handleAgregar=()=>{
         const a={dni:dni,legajo:leg,nomPista:pista}
-        crearAsistencia(a)
+        crearAsistencia(a,user.token)
         cerrar()
 
     }

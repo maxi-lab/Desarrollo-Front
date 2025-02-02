@@ -215,7 +215,7 @@ function AdminPage() {
   }
   alternarP=async(p)=>{
     try {
-      await alternarEstado(p.row.nombre);
+      await alternarEstado(p.row.nombre,user.token);
       setDatos((prevDatos) =>
         prevDatos.map((item) =>
           item.id === p.id

@@ -1,7 +1,7 @@
 import { Alert, Box, Button,TextField } from "@mui/material"
 import { useState, useContext } from "react"
 import { UserContext } from "../../Context/UserContext";
-import { agregarUser } from "../../Helpers/usersEndPoint";
+import { agregarUser, logIn } from "../../Helpers/usersEndPoint";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Turista from "./Turista";
 import './styles.css'
@@ -13,7 +13,7 @@ export default function SignUp() {
     const [error, setError] = useState(null);
     const {setUser} = useContext(UserContext);
 
-    const handleSignUp=()=>{
+    const handleSignUp=async()=>{
         if(userName==='' || password==='' || email===''){
             setError('Por favor complete todos los campos')
             return
@@ -21,14 +21,16 @@ export default function SignUp() {
             setError('Las contraseñas no coinciden')
             return
         } 
-        setError(null)
-        const user = {'name':userName, 'password':password, 'email':email,'rol':'Turista'};
-        agregarUser(user)
-        setUser(user)
+        //setError(null)
+        let user = {'name':userName, 'password':password, 'email':email,'rol':'Turista'};
+        await agregarUser(user)
+        let u=await logIn({username:user.name,password:user.password})
+        //setUser(u)
         setError('Al turista')
+
     }
-    if(error==='Al turista'){
-        return <Turista/>
+    if(error=='Al turista'){
+        return <Turista usrName={userName}/>
     }
     //ojo que cuando lanzo la alerta, el boton se sale del area del form
     return <div className="form">
@@ -39,7 +41,7 @@ export default function SignUp() {
             <TextField  variant="outlined" label="Contraseña" type="password" onChange={(e)=>setPassword(e.target.value)} />{/* verify psw */}
             <TextField  variant="outlined" label="Verificar contraseña" type="password" onChange={(e)=>setVerify(e.target.value)} />
             <TextField  variant="outlined" label="Correo electronico" type="email" onChange={(e)=>setEmail(e.target.value)} />
-            <Button onClick={handleSignUp} variant="contained" type="submit">Siguernte <ArrowForwardIcon/> </Button>
+            <Button onClick={handleSignUp} variant="contained" >Siguernte <ArrowForwardIcon/> </Button>
         </Box>
     
     </div>

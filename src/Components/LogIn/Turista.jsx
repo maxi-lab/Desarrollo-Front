@@ -6,7 +6,7 @@ import "./styles.css"
 import { agregarTurista } from "../../Helpers/turistasEndPont";
 import SaveIcon from '@mui/icons-material/Save';
 import { useNavigate } from "react-router-dom";
-export default function Turista() {
+export default function Turista({usrName}) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [dni, setDni] = useState('');
@@ -19,7 +19,7 @@ export default function Turista() {
             return
         }
         setError(null)
-        const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':user.name};
+        const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':usrName}; 
         agregarTurista(turista)
         useNavigate('/menu')
         

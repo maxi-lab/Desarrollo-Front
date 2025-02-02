@@ -2,17 +2,22 @@ import { useContext, useEffect } from "react"
 import { useState } from "react"
 import { UserContext } from "../../Context/UserContext"
 import { TableBody, TableCell, TableHead, TableRow,Box,Table, Button } from "@mui/material";
+import { API_URL_BACKEND } from "../../data/API/env";
 
 export default function TuristaTable (){
     const [asistencias,setAsistencias]=useState([])
     const {user}=useContext(UserContext)
     useEffect(()=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
+            headers: myHeaders,
             redirect: "follow"
           };
           
-          fetch("https://localhost:7268/api/Asistencia", requestOptions)
+          fetch(`${API_URL_BACKEND}Asistencia`, requestOptions)
             .then((response) => response.json())
             .then((result) => {console.log(result)
                 let d=result.filter(r=>r.turista.userName===user.userName)

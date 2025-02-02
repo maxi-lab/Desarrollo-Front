@@ -23,7 +23,7 @@ export async function alternarEstadoT(transporte, token) {
     redirect: "follow"
   };
   
-  fetch(`${API_URL_BACKEND}api/Transporte?nom=${transporte}`, requestOptions)
+  fetch(`${API_URL_BACKEND}Transporte?nom=${transporte}`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error))
