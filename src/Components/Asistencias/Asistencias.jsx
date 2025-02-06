@@ -3,11 +3,38 @@ import { UserContext } from "../../Context/UserContext";
 import { TableBody, TableCell, TableHead, TableRow,Box,Table, Button } from "@mui/material";
 import AgregarModal from "./AgregarModal";
 import { API_URL_BACKEND } from "../../data/API/env";
+import { ambulancia } from "../../Helpers/asistenciaEndPoint";
 
 export default function Asistencias(){
     const [asistencias,setAsistencias]=useState([])
-    const [legajo,setLegajo]=useState(0)
+    const [legajo,setLegajo]=useState(0);
     const {user}=useContext(UserContext)
+    const handleAmbulancia=(id)=>{
+        const a=asistencias.find((a)=>a.id===id)
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify({
+            "nombre": `${a.turista.nombre} ${a.turista.apellido}`,
+            "telefono": `${a.turista.telefono}`,
+            "direccion": "Ruta 3, Km 26",
+            "descripcion":  `Los Pinos`,  
+        });
+
+        const requestOptions = {
+            method: "POST",
+            headers: myHeaders,
+            body: raw,
+            redirect: "follow"
+        };
+
+        fetch("https://ambulanciaya.onrender.com/ambulancias/solicitar", requestOptions)
+            .then((response) => response.text())
+            .then((result) => {console.log(result)
+                ambulancia(a.codigo,user.token)
+            })
+            .catch((error) => console.error(error));
+}
     useEffect(()=>{
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -16,22 +43,33 @@ export default function Asistencias(){
             method: "GET",
             headers: myHeaders,
             redirect: "follow"
-          };
-          
-            fetch(`${API_URL_BACKEND}User/GetProfile?userName=${user.userName}`, requestOptions)
-            .then((response) => response.json())
-            .then((result) => {console.log(result)
-                setLegajo(result.nroIdentificador)
-            })
-            .catch((error) => console.error(error));
-            fetch(`${API_URL_BACKEND}Asistencia`, requestOptions).then((response) => response.json())
-            .then((result) => {
-                let d=result.filter(r=>r.rescatista.legajo===legajo)
-                d=d.map((r,i)=>{return {...r,id:i+1}}) 
-                console.log(d)   
-                setAsistencias(d) 
-            }).catch((error) => console.error(error));
+          };  
+                fetch(`${API_URL_BACKEND}User/GetProfile?userName=${user.userName}`, requestOptions)
+                    .then((response) => response.json())
+                    .then((result) => {console.log(result)
+                        setLegajo(result.nroIdentificador)
+                    })
+                    .catch((error) => console.error(error));  
     },[])
+    useEffect(()=>{
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Authorization", `Bearer ${user.token}`);
+        const requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: "follow"
+          };  
+        fetch(`${API_URL_BACKEND}Rescatista?legajo=${legajo}`, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                console.log(result)
+                const a=result.asistencias.map((r,i)=>{return {...r,id:i+1}})
+                setAsistencias(a)
+
+                
+            }).catch((error) => console.error(error));
+    },[legajo])
 
     return<>
         <Box>
@@ -49,7 +87,7 @@ export default function Asistencias(){
                         <TableCell>{a.codigo}</TableCell>
                         <TableCell>{a.pista.nombre}</TableCell>
                         <TableCell>{`${a.turista.apellido}, ${a.turista.nombre}`}</TableCell>
-                        <TableCell><Button>Ambulancia</Button></TableCell>
+                        <TableCell>{!a.ambulancia?<Button onClick={()=>handleAmbulancia(a.id)}>Ambulancia</Button>:'Atendido por Ambulancias Ya'}</TableCell>
                     </TableRow>)}
                 </TableBody>
             </Table>

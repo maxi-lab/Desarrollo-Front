@@ -150,6 +150,11 @@ const turistas=[
     headerName: 'apellido',
     width: 150,
     editable: true,
+  },{field: 'telefono',
+    headerName: 'Telefono',
+    width: 150,
+    editable: true,
+
   },
   {
     field: 'userName',
@@ -158,6 +163,7 @@ const turistas=[
     width: 200,
     editable: true,
   },
+  
   {
     filed:'eliminar',
     headerName:'',
@@ -202,6 +208,13 @@ const usuarios=[
   {field:'acender',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>acender(params)}>Acender</Button>)},
   {field:'decender',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>decender(params)}>Degradar</Button>)}
 
+]
+const asistentes=[
+  {field:'turista',headerName:'Turista',width:150},
+  {field:'rescatista',headerName:'Rescatista',width:150},
+  {field:'pista',headerName:'Pista',width:150},
+  {field:'codigo',headerName:'Codigo',width:150},
+  {field:'eliminar',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>console.log('Eliminando')}>Eliminar</Button>)},
 ]
 function AdminPage() {
 
@@ -334,6 +347,7 @@ function AdminPage() {
   endpointMap.set(turistas,"Turista/Turistas")
   endpointMap.set(rescatistas,"Rescatista/Rescatistas")
   endpointMap.set(usuarios,"User/GetUsers")
+  endpointMap.set(asistentes,"Asistencia")
   useEffect(()=>{
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -366,6 +380,7 @@ function AdminPage() {
           <Button onClick={()=>setEntidades(turistas)}>Turistas</Button>
           <Button onClick={()=>setEntidades(rescatistas)}>Rescatistas</Button>
           <Button onClick={()=>setEntidades(usuarios)}>Usuarios</Button>
+          <Button onClick={()=>setEntidades(asistentes)}>Asistencias</Button>
         </ButtonGroup>
         <AdminGrid columns={entidades} rows={datos} key={entidades.map(e=>e.field).join('-')}/>
         <AddModal entidad={endpointMap.get(entidades)} /> 

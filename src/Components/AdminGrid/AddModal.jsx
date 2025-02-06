@@ -43,6 +43,7 @@ export default function AddModal({entidad,add}) {
     entidadMap.set('Turista/Turistas',{form:<TuristasForm saveData={formToModal}/>,nombre:'Turista',action:agregarTurista});
     entidadMap.set('Rescatista/Rescatistas',{form:<RescatistaForm saveData={formToModal}/>,nombre:'Rescatista',action:agregarRescatista});
     entidadMap.set('User/GetUsers',{form:<UserForm saveData={formToModal}/>,nombre:'Usuario',action:agregarUser});
+    entidadMap.set('Asistencia',{form:<></>,nombre:'Asistencia',action:()=>{}});    
    
    return <>
         <Button onClick={handleOpen}><GridAddIcon/></Button> 

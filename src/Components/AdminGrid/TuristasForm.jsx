@@ -1,7 +1,7 @@
 import {TextField } from "@mui/material";
 import {useState} from "react";
 export default function TuristasForm({saveData}) {
-    const [data, setData] = useState({nombre:'',apellido:'',dni:'',usuario:''});
+    const [data, setData] = useState({nombre:'',apellido:'',dni:'',usuario:'',tel:''});
     const handleNombre=(e)=>{
         setData({...data,nombre:e.target.value})
         saveData(data);
@@ -24,5 +24,6 @@ export default function TuristasForm({saveData}) {
         <TextField label={'Apellido de turista'} onChange={handleApellido}/>
         <TextField label={'DNI'} onChange={handleDni}/>
         <TextField label={'Usuario'} onChange={handleUsuario}/>
+        <TextField label={'Telefono'} onChange={(e)=>setData({...data,tel:e.target.value})}/>
     </>
 }

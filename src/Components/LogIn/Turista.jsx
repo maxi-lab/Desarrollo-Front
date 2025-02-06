@@ -10,6 +10,7 @@ export default function Turista({usrName}) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [dni, setDni] = useState('');
+    const [tel,setTel]=useState('');
     const [error, setError] = useState(null);
     const {user} = useContext(UserContext);
     const handleSave=()=>{
@@ -19,7 +20,7 @@ export default function Turista({usrName}) {
             return
         }
         setError(null)
-        const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':usrName}; 
+        const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':usrName,'tel':tel}; 
         agregarTurista(turista)
         useNavigate('/menu')
         
@@ -31,6 +32,8 @@ export default function Turista({usrName}) {
             <TextField variant="outlined" label="Nombre" onChange={(e)=>setNombre(e.target.value)} />
             <TextField variant="outlined" label="Apellido" onChange={(e)=>setApellido(e.target.value)}/>
             <TextField variant="outlined" label="DNI" type="number" onChange={(e)=>setDni(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
+            <TextField variant="outlined" label="Telefono" type="number" onChange={(e)=>setTel(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
+            
             <Button onClick={handleSave} variant="contained">Guardar <SaveIcon/></Button>
         </Box>
     </div>

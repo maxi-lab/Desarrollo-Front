@@ -13,7 +13,6 @@ export function eliminarTurista(dni,token) {
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
-    
 }
  
 export function agregarTurista(turista) {
@@ -22,7 +21,7 @@ export function agregarTurista(turista) {
     redirect: "follow"
   };
   
-  fetch(`${API_URL_BACKEND}Turista?dni=${turista.dni}&ape=${turista.apellido}&nombre=${turista.nombre}&nomUser=${turista.nomUsr}\n`, requestOptions)
+  fetch(`${API_URL_BACKEND}Turista?dni=${turista.dni}&ape=${turista.apellido}&nombre=${turista.nombre}&nomUser=${turista.nomUsr}&t=${turista.tel}\n`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
