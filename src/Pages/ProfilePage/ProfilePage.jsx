@@ -78,7 +78,7 @@ export default function ProfilePage (){
         <ListItemText primary={profile.rol==="Rescatista"?`Legajo: ${profile.nroIdentificador}`:`DNI: ${profile.nroIdentificador}`} />
       </ListItem>
       <Divider variant="inset" component="li" />
-      <ListItem><ListItemText primary={profile.rol!=="Rescatista"?`Telefono `:''}/></ListItem>
+      <ListItem><ListItemText primary={profile.rol!=="Rescatista"?`Telefono ${profile.tel} `:''}/></ListItem>
       </List>
       </div>
     

@@ -6,6 +6,16 @@ export default function ChangePassForm(){
     const {user}=useContext(UserContext)
     const [pass,setPass]=useState('')
     const [newPass,setNewPass]=useState('')
+    const verifyPass=()=>{
+        const regex=/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/
+        if(newPass.length<8){
+            return false
+        }
+        if(!regex.test(newPass)){
+            return false
+        }
+        return true
+    }
     
     const handleCambiar=async()=>{
         const credentials={
@@ -14,7 +24,7 @@ export default function ChangePassForm(){
         }
         try{
             await logIn(credentials)
-            await cambiarPass(user.userName,newPass,credentials.password,user.token);
+            verifyPass()?await cambiarPass(user.userName,newPass,credentials.password,user.token):console.log('contraseña no valida')
         }catch{
             console.error("todo mal")
         }

@@ -31,3 +31,23 @@ fetch(`${API_URL_BACKEND}Asistencia?c=${c}`, requestOptions)
   .then((result) => console.log(result))
   .catch((error) => console.error(error));
 }
+export function eliminarAsistencia(c,token){
+    
+  const myHeaders = new Headers();
+  myHeaders.append("Authorization", `Bearer ${token}`);
+  
+  const raw = "";
+  
+  const requestOptions = {
+    method: "DELETE",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow"
+  };
+  
+  fetch(`${API_URL_BACKEND}Asistencia?c=${c}`, requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+
+}

@@ -1,6 +1,5 @@
-import { Alert, Box, Button,TextField } from "@mui/material"
-import { useState, useContext } from "react"
-import { UserContext } from "../../Context/UserContext";
+import { Alert, Box, Button,TextField, CircularProgress } from "@mui/material"
+import { useState } from "react"
 import { agregarUser, logIn } from "../../Helpers/usersEndPoint";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Turista from "./Turista";
@@ -11,17 +10,36 @@ export default function SignUp() {
     const [verify,setVerify]=useState('');
     const [email, setEmail] = useState('');
     const [error, setError] = useState(null);
-    const {setUser} = useContext(UserContext);
+    const [loading, setLoading] = useState(false);
 
+    const checkPass=()=>{
+        const regex=/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]+$/
+
+        if(password!==verify){
+            setError('Las contraseñas no coinciden')
+            return false
+        }
+        if(password.length<8){
+            setError('La contraseña debe tener al menos 8 caracteres')
+            return false
+        }
+        if(!regex.test(password)){
+            setError('La contraseña debe tener al menos una letra mayuscula y un numero')
+            return false
+        }
+        return true
+    }
     const handleSignUp=async()=>{
+        setLoading(true)
         if(userName==='' || password==='' || email===''){
             setError('Por favor complete todos los campos')
+            setLoading(false)
             return
-        }else if (password!==verify) {
-            setError('Las contraseñas no coinciden')
+        }else if (!checkPass()){
+            setLoading(false)
             return
-        } 
-        //setError(null)
+        }
+        setError(null)
         let user = {'name':userName, 'password':password, 'email':email,'rol':'Turista'};
         await agregarUser(user)
         let u=await logIn({username:user.name,password:user.password})
@@ -41,8 +59,7 @@ export default function SignUp() {
             <TextField  variant="outlined" label="Contraseña" type="password" onChange={(e)=>setPassword(e.target.value)} />{/* verify psw */}
             <TextField  variant="outlined" label="Verificar contraseña" type="password" onChange={(e)=>setVerify(e.target.value)} />
             <TextField  variant="outlined" label="Correo electronico" type="email" onChange={(e)=>setEmail(e.target.value)} />
-            <Button onClick={handleSignUp} variant="contained" >Siguernte <ArrowForwardIcon/> </Button>
+            {loading?<CircularProgress/>:<Button onClick={handleSignUp} variant="contained" >Siguernte <ArrowForwardIcon/> </Button>}
         </Box>
-    
     </div>
 }

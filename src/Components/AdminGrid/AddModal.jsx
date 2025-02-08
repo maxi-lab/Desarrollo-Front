@@ -31,18 +31,18 @@ export default function AddModal({entidad,add}) {
         setData(formData);
     }
 
-    const saveData=async ()=>{
+    const saveData=()=>{
         entidadMap.get(entidad).action(data,user.token);
         handleClose();
     }
     const entidadMap = new Map();
-    entidadMap.set('Pista',{form:<PistaForm saveData={formToModal}/>,nombre:'Pista',action:agregarPista});
-    entidadMap.set('Transporte',{form:<TransporteForm saveData={formToModal}/>,nombre:'Transporte',action:agregarTransporte});
-    entidadMap.set('PuntoInteres',{form:<PuntoInteresForm saveData={formToModal}/>,nombre:'Punto de interes',action:agregarPunto});
-    entidadMap.set('Paradas',{form:<ParadasForm saveData={formToModal}/>,nombre:'Parada',action:agregarParada});
-    entidadMap.set('Turista/Turistas',{form:<TuristasForm saveData={formToModal}/>,nombre:'Turista',action:agregarTurista});
-    entidadMap.set('Rescatista/Rescatistas',{form:<RescatistaForm saveData={formToModal}/>,nombre:'Rescatista',action:agregarRescatista});
-    entidadMap.set('User/GetUsers',{form:<UserForm saveData={formToModal}/>,nombre:'Usuario',action:agregarUser});
+    entidadMap.set('Pista',{form:<PistaForm saveData={handleClose}/>,nombre:'Pista',action:agregarPista});
+    entidadMap.set('Transporte',{form:<TransporteForm saveData={handleClose}/>,nombre:'Transporte',action:agregarTransporte});
+    entidadMap.set('PuntoInteres',{form:<PuntoInteresForm saveData={handleClose}/>,nombre:'Punto de interes',action:agregarPunto});
+    entidadMap.set('Paradas',{form:<ParadasForm saveData={handleClose}/>,nombre:'Parada',action:agregarParada});
+    entidadMap.set('Turista/Turistas',{form:<TuristasForm saveData={handleClose}/>,nombre:'Turista',action:agregarTurista});
+    entidadMap.set('Rescatista/Rescatistas',{form:<RescatistaForm saveData={handleClose}/>,nombre:'Rescatista',action:agregarRescatista});
+    entidadMap.set('User/GetUsers',{form:<UserForm saveData={handleClose}/>,nombre:'Usuario',action:agregarUser});
     entidadMap.set('Asistencia',{form:<></>,nombre:'Asistencia',action:()=>{}});    
    
    return <>
@@ -52,8 +52,7 @@ export default function AddModal({entidad,add}) {
             <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4, }}>
                 <h2 id="simple-modal-title">Agregar {entidadMap.get(entidad).nombre}</h2>
                 {entidadMap.get(entidad).form}
-                <br />
-                <Button onClick={()=>saveData()}><CheckIcon/></Button>
+                
                 <Button onClick={()=>handleClose()}><CloseIcon/></Button>
             </Box>
         </Modal>

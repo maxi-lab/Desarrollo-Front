@@ -1,4 +1,4 @@
-import { Box, Button,TextField } from "@mui/material"
+import { Box, Button,TextField, CircularProgress } from "@mui/material"
 import	Alert from '@mui/material/Alert';
 import { UserContext } from "../../Context/UserContext";
 import { useState,useContext } from "react"
@@ -12,17 +12,21 @@ export default function Turista({usrName}) {
     const [dni, setDni] = useState('');
     const [tel,setTel]=useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const {user} = useContext(UserContext);
+    const navigate = useNavigate();
     const handleSave=()=>{
+        setLoading(true)
         const regex = /[e+\-*/]/;
-        if((nombre==='' || apellido==='' || dni==='')&&!regex.test(dni)){
+        if((nombre==='' || apellido==='' || dni==='')&&!regex.test(dni)&&!regex.test(tel)){
             setError('Por favor complete todos los campos con valores validos')
+            setLoading(false)
             return
         }
         setError(null)
         const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':usrName,'tel':tel}; 
         agregarTurista(turista)
-        useNavigate('/menu')
+        navigate('/menu')
         
     }
     return<div className="form">
@@ -34,7 +38,7 @@ export default function Turista({usrName}) {
             <TextField variant="outlined" label="DNI" type="number" onChange={(e)=>setDni(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
             <TextField variant="outlined" label="Telefono" type="number" onChange={(e)=>setTel(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
             
-            <Button onClick={handleSave} variant="contained">Guardar <SaveIcon/></Button>
+            {loading?<CircularProgress/>:<Button onClick={handleSave} variant="contained">Guardar <SaveIcon/></Button>}
         </Box>
     </div>
 }

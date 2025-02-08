@@ -14,7 +14,8 @@ import { eliminarUser,acenderUser,decenderUser } from '../../Helpers/usersEndPoi
 import { upMap,downMap } from '../../Helpers/roles';
 import { API_URL_BACKEND } from '../../data/API/env';
 import { UserContext } from '../../Context/UserContext';
-let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender;
+import { eliminarAsistencia } from '../../Helpers/asistenciaEndPoint';
+let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender,eliminarAsis;
 
 
 const pistas = [
@@ -210,11 +211,11 @@ const usuarios=[
 
 ]
 const asistentes=[
-  {field:'turista',headerName:'Turista',width:150},
-  {field:'rescatista',headerName:'Rescatista',width:150},
-  {field:'pista',headerName:'Pista',width:150},
+  {field:'nomApeTurista',headerName:'Turista',width:150},
+  {field:'nomApeRescatista',headerName:'Rescatista',width:150},
+  {field:'nomPista',headerName:'Pista',width:150},
   {field:'codigo',headerName:'Codigo',width:150},
-  {field:'eliminar',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>console.log('Eliminando')}>Eliminar</Button>)},
+  {field:'eliminar',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>eliminarAsis(params.row.codigo)}>Eliminar</Button>)},
 ]
 function AdminPage() {
 
@@ -225,6 +226,10 @@ function AdminPage() {
     setDatos((prev)=>{
       prev.map((i)=>i.id==p.row.id?{...i,type:e.target.value}:i)
     })
+  }
+  eliminarAsis=(c)=>{
+    eliminarAsistencia(c,user.token)
+    setDatos((prev)=>prev.filter(d=>d.codigo!==c))
   }
   alternarP=async(p)=>{
     try {
