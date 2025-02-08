@@ -1,11 +1,21 @@
-import { Button, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
-import { useState,useContext } from "react";
+import { Button, FormControl, FormControlLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, TextField } from "@mui/material";
+import { useState,useContext,useEffect } from "react";
 import { UserContext } from "../../Context/UserContext";
 import {agregarPunto} from "../../Helpers/puntosEndPoint";
 import CheckIcon from '@mui/icons-material/Check';
+import { API_URL_BACKEND } from "../../data/API/env";
 export default function PuntoInteresFor({saveData}) {
-    const [data, setData] = useState({nombre:'',tipo:'',parada:''});    
+    const [data, setData] = useState({nombre:'',tipo:'',parada:''});   
+    const [paradas, setParadas] = useState([]); 
     const {user} = useContext(UserContext);
+    useEffect(()=>{
+        fetch(`${API_URL_BACKEND}Paradas`)
+        .then((response) => response.json())
+        .then((result) => {
+            const nombres = result.map((parada,i) => {return {'nombre':parada.nombre,'id':i+1}});
+            setParadas(nombres);
+        }).catch((error) => console.error(error));
+    },[])    
     const handleNom = (e) => {
             setData({...data, nombre: e.target.value});
             
@@ -30,7 +40,12 @@ export default function PuntoInteresFor({saveData}) {
     <FormControlLabel value={"2"} control={<Radio/>} label="Rental"/>
     <FormControlLabel value={"3"} control={<Radio/>} label="Centro Medico"/>
     </RadioGroup>
-    <TextField label={'Parada'} onChange={handleParada}/>
+    <FormControl>
+        <InputLabel>Parada</InputLabel>
+        <Select value={data.parada} onChange={handleParada}>
+                {paradas.map((p)=><MenuItem key={p.id} value={p.id}>{p.nombre}</MenuItem>)}
+        </Select>
+    </FormControl>
     <br />
     <Button onClick={handleCrearPunto}><CheckIcon/></Button>
     </>
