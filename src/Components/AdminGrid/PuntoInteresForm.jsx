@@ -4,8 +4,11 @@ import { UserContext } from "../../Context/UserContext";
 import {agregarPunto} from "../../Helpers/puntosEndPoint";
 import CheckIcon from '@mui/icons-material/Check';
 import { API_URL_BACKEND } from "../../data/API/env";
+import { getCookie } from "../../Helpers/Cookies/cookies";
+import { login } from "../../Helpers/AngryReviews/auth";
+import { crearPost } from "../../Helpers/AngryReviews/reviews";
 export default function PuntoInteresFor({saveData}) {
-    const [data, setData] = useState({nombre:'',tipo:'',parada:''});   
+    const [data, setData] = useState({nombre:'',tipo:0,parada:''});   
     const [paradas, setParadas] = useState([]); 
     const {user} = useContext(UserContext);
     useEffect(()=>{
@@ -30,6 +33,15 @@ export default function PuntoInteresFor({saveData}) {
     }
     const handleCrearPunto=()=>{
         agregarPunto(data,user.token);
+        if(getCookie("tokenReview")==null){
+            login('centro@mail.com','a').then(t=>{
+                document.cookie=`tokenReview=${t}`
+            })
+        }
+        if(data.tipo==0){
+            crearPost(data.nombre,`En ${data.parada}, LOS PINOS`,getCookie("tokenReview"))
+        }
+
         saveData();
     }
     return <>
@@ -43,7 +55,7 @@ export default function PuntoInteresFor({saveData}) {
     <FormControl>
         <InputLabel>Parada</InputLabel>
         <Select value={data.parada} onChange={handleParada}>
-                {paradas.map((p)=><MenuItem key={p.id} value={p.id}>{p.nombre}</MenuItem>)}
+                {paradas.map((p)=><MenuItem key={p.id} value={p.nombre}>{p.nombre}</MenuItem>)}
         </Select>
     </FormControl>
     <br />

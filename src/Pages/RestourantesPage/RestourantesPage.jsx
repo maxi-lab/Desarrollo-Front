@@ -3,25 +3,21 @@ import { Heading } from "../../Components/Heading/Headiing";
 import RestoList from "../../Components/RestoList/RestoList";
 import { Box, Typography } from "@mui/material";
 import { API_URL_BACKEND } from "../../data/API/env";
-const Restorantes=[{id:1,nombre:"ifeiw",calificacion:5},{id:2,nombre:"ifede",calificacion:4},{id:3,nombre:"de",calificacion:3}]
-
+import { obtenerPosts } from "../../Helpers/AngryReviews/reviews";
+import { login } from "../../Helpers/AngryReviews/auth";
 export default function RestorantesPage(){
     const [restorantes,setRestorantes]=useState([])
     useEffect(()=>{
-        const requestOptions = {
-            method: "GET",
-            redirect: "follow"
-          };
-          
-          fetch(`${API_URL_BACKEND}PuntoInteres`, requestOptions)
-            .then((response) => response.json())
-            .then((result) => {
-                let data=result.filter(r=>r.nombreTipo==="Restorante")
-                data=data.map((d,i)=>{return{...d,id:i+1,calificacion:0}})
-                console.log(data)
-                setRestorantes(data)
-            })
-            .catch((error) => console.error(error));
+        obtenerPosts().then((r)=>{
+            console.log(r)
+            const restos=r.map((r,i)=>{return{"nombre":r.title,"id":i+1,"calificacion":r.avg_ratings}})
+            console.log(restos)
+            setRestorantes(restos)
+        })
+        login('centro@mail.com','a').then(r=>{
+           document.cookie=`tokenReview= ${r}` 
+        })
+
     },[])
     return <>
     <Heading/>

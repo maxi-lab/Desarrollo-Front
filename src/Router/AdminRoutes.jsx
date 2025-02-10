@@ -7,6 +7,6 @@ export default function AdminRoutes(){
     return <Routes>
         <Route path='/*' element={<UnprotectedRoutes/>}/>
         <Route path="/account" element={<AccountPage/>}/>
-        <Route path='/AdminPage' element={<AdminPage onAdminPage={() => {}} />} />
+        <Route path='/AdminPage' element={<AdminPage onAdminPage={() => {}} />} />x
     </Routes>
 }

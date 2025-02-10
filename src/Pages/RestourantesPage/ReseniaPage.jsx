@@ -11,22 +11,42 @@ import Rating from '@mui/material/Rating';
 import { Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { r } from '../../data/Resenias/dataSimu';
+import AngryReviewsSingUp from '../../Components/AngryReviews/AngryReviewsSingUp';
+import AngryReviewsLogIn from '../../Components/AngryReviews/AngryReviewsLogIn';
+import { obtenerPosts,obtenerReviews,crearReseña, getAuthor} from '../../Helpers/AngryReviews/reviews';
+import { getCookie } from '../../Helpers/Cookies/cookies';
 export default function ReseniaPage(){
    const {nomResto}=useParams()
    const [resenias,setResenias]=useState([]);
-   
+   const [id,setId]=useState(0)
+   const c=getCookie('tokenReview')
    useEffect(()=>{
-    const data=r.filter(re=>re.nomResto===nomResto)//simula la conexion a la API de reseñas
-    
-    setResenias(data)
+    obtenerPosts().then(r=>{
+      const resto=r.find(r=>r.title===nomResto)
+      setId(resto.id)
+      return resto.id
+    })
+    .then((r)=>{
+      obtenerReviews(r).then(async(r)=>{
+        const re=await Promise.all(r.map(async (r)=>{
+          let a= await getAuthor(c,r.owner)
+         
+          return {...r,'autor':a}
+        }))
+        setResenias(re)
+      })
+    })
     
    },[])
    const [rating,setRating]=useState(null)
    const [cuerpo,setCuerpo]=useState("")
    const handlePublish=()=>{
-    const res={nomResto:nomResto,resenia:cuerpo,nota:rating}
-    setResenias((prev)=>[...prev,res])
+    
+    crearReseña(c,cuerpo,rating,id)
+    .then(r=>{
+      setResenias((prev)=>[prev,r])
+    }).catch(e=>console.error(e))
+    
     setCuerpo("")
     setRating(null)
    }
@@ -39,24 +59,24 @@ export default function ReseniaPage(){
         margin: 'auto',
         bgcolor:'skyblue',
         position: 'relative',
-        
         borderRadius:3,
         flexDirection: 'column',}}>
     
     <h1>{nomResto}</h1>
     <List sx={{ width: '100%', maxWidth: 360,  }}>
       {resenias.map((r)=>{
+
         return <>
-          <ListItem alignItems="flex-start">
+          <ListItem alignItems="flex-start" key={r.id}>
         
         <ListItemText
-          primary=""
+          primary={<>{r.autor}</>}
           secondary={<>
-              {r.resenia}
+              {r.comment}
               </>
             }
         />
-        <Rating value={r.nota} readOnly/>
+        <Rating value={r.rating} readOnly/>
         </ListItem>
         <Divider variant="inset" component="li" />
         
@@ -76,7 +96,9 @@ export default function ReseniaPage(){
         onChange={(e)=>setRating(e.target._wrapperState.initialValue)}
         defaultValue={rating}       
       />
-    <Button onClick={handlePublish} >Publicar</Button>
+    <Button onClick={handlePublish}>Publicar</Button>
     </Box>
+      <AngryReviewsLogIn/>
+      <AngryReviewsSingUp/>
     </>
 }
