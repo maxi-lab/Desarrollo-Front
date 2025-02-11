@@ -220,6 +220,7 @@ const asistentes=[
 function AdminPage() {
 
   const [datos,setDatos]=useState([]);
+  const [flag,setFlag]=useState(false)
   const {user}=useContext(UserContext)
 
   handleSelectChange=(e,p)=>{
@@ -308,7 +309,9 @@ function AdminPage() {
   eliminarPa=async(p)=>{
     try {
       await eliminarParada(p.row.nombre,user.token)
-      setDatos((prev)=>prev.filter(d=>d.id!==p.id))
+      const n=datos.filter(d=>d.id!==p.id)
+      console.log(n)
+      setDatos(n)
 
     } catch (error) {
       console.error('Error deleting:', error);
@@ -373,7 +376,7 @@ function AdminPage() {
       })
       .catch((error) => console.error(error))//atrapa el error
      
-  },[entidades])
+  },[entidades,flag])
   return (
     <div>
         <Heading/>
@@ -388,7 +391,7 @@ function AdminPage() {
           <Button onClick={()=>setEntidades(asistentes)}>Asistencias</Button>
         </ButtonGroup>
         <AdminGrid columns={entidades} rows={datos} key={entidades.map(e=>e.field).join('-')}/>
-        <AddModal entidad={endpointMap.get(entidades)} /> 
+        {entidades!=asistentes?<AddModal entidad={endpointMap.get(entidades)} add={()=>setFlag((prev)=>!prev)} />:''} 
     </div>
     
   )

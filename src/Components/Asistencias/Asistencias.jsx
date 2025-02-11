@@ -8,6 +8,7 @@ import { ambulancia } from "../../Helpers/asistenciaEndPoint";
 export default function Asistencias(){
     const [asistencias,setAsistencias]=useState([])
     const [legajo,setLegajo]=useState(0);
+    const [flag,setFlag]=useState(false)
     const {user}=useContext(UserContext)
     const handleAmbulancia=(id)=>{
         const a=asistencias.find((a)=>a.id===id)
@@ -27,11 +28,20 @@ export default function Asistencias(){
             body: raw,
             redirect: "follow"
         };
-
+        
         fetch("https://ambulanciaya.onrender.com/ambulancias/solicitar", requestOptions)
             .then((response) => response.text())
             .then((result) => {console.log(result)
                 ambulancia(a.codigo,user.token)
+            })
+            .then((r)=>{
+                const asist=asistencias.map(asi=>{
+                    if (asi.codigo==a.codigo){
+                        asi.ambulancia=true
+                    }
+                    return asi
+                })
+                setAsistencias(asist)
             })
             .catch((error) => console.error(error));
 }
@@ -69,7 +79,7 @@ export default function Asistencias(){
 
                 
             }).catch((error) => console.error(error));
-    },[legajo])
+    },[legajo,flag])
 
     return<>
         <Box>
@@ -91,7 +101,7 @@ export default function Asistencias(){
                     </TableRow>)}
                 </TableBody>
             </Table>
-            <AgregarModal leg={legajo}/>
+            <AgregarModal leg={legajo} add={()=>{setFlag((prev)=>!prev)}}/>
         </Box>
     </>
 }

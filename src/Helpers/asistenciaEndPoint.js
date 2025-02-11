@@ -22,7 +22,7 @@ export function ambulancia(c,token){
     const requestOptions = {
       method: "PUT",
       headers: myHeaders,
-      body: raw,
+      
       redirect: "follow"
     };
 

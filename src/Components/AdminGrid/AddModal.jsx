@@ -1,23 +1,15 @@
 import { Button } from "@mui/material";
 import { GridAddIcon } from "@mui/x-data-grid";
-import { act, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Box } from "@mui/system";
 import Modal from "@mui/material/Modal";
 import PistaForm from "./PistaForm";
-import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import TransporteForm from "./TransporteForm";
 import PuntoInteresForm from "./PuntoInteresForm";
 import ParadasForm from "./ParadasForm";
 import TuristasForm from "./TuristasForm";
 import RescatistaForm from "./RescatistaForm";
-import { agregarPista } from "../../Helpers/pistasEndPont";
-import { agregarParada } from "../../Helpers/paradasEndPoint";
-import {agregarPunto} from "../../Helpers/puntosEndPoint";
-import { agregarTurista } from "../../Helpers/turistasEndPont";
-import { agregarTransporte } from "../../Helpers/transporteEndPoint";
-import { agregarRescatista } from "../../Helpers/rescatistaEndPoint";
-import { agregarUser } from "../../Helpers/usersEndPoint";
 import { UserForm } from "./UserForm";
 import { UserContext } from "../../Context/UserContext";
 export default function AddModal({entidad,add}) {
@@ -27,24 +19,20 @@ export default function AddModal({entidad,add}) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const formToModal=(formData)=>{
-        setData(formData);
-    }
 
     const saveData=()=>{
-        entidadMap.get(entidad).action(data,user.token);
+        add()
         handleClose();
     }
     const entidadMap = new Map();
-    entidadMap.set('Pista',{form:<PistaForm saveData={handleClose}/>,nombre:'Pista',action:agregarPista});
-    entidadMap.set('Transporte',{form:<TransporteForm saveData={handleClose}/>,nombre:'Transporte',action:agregarTransporte});
-    entidadMap.set('PuntoInteres',{form:<PuntoInteresForm saveData={handleClose}/>,nombre:'Punto de interes',action:agregarPunto});
-    entidadMap.set('Paradas',{form:<ParadasForm saveData={handleClose}/>,nombre:'Parada',action:agregarParada});
-    entidadMap.set('Turista/Turistas',{form:<TuristasForm saveData={handleClose}/>,nombre:'Turista',action:agregarTurista});
-    entidadMap.set('Rescatista/Rescatistas',{form:<RescatistaForm saveData={handleClose}/>,nombre:'Rescatista',action:agregarRescatista});
-    entidadMap.set('User/GetUsers',{form:<UserForm saveData={handleClose}/>,nombre:'Usuario',action:agregarUser});
-    entidadMap.set('Asistencia',{form:<></>,nombre:'Asistencia',action:()=>{}});    
-   
+    entidadMap.set('Pista',{form:<PistaForm saveData={saveData}/>,nombre:'Pista'});
+    entidadMap.set('Transporte',{form:<TransporteForm saveData={saveData}/>,nombre:'Transporte'});
+    entidadMap.set('PuntoInteres',{form:<PuntoInteresForm saveData={saveData}/>,nombre:'Punto de interes'});
+    entidadMap.set('Paradas',{form:<ParadasForm saveData={saveData}/>,nombre:'Parada'});
+    entidadMap.set('Turista/Turistas',{form:<TuristasForm saveData={saveData}/>,nombre:'Turista'});
+    entidadMap.set('Rescatista/Rescatistas',{form:<RescatistaForm saveData={saveData}/>,nombre:'Rescatista'});
+    entidadMap.set('User/GetUsers',{form:<UserForm saveData={saveData}/>,nombre:'Usuario'});
+ 
    return <>
         <Button onClick={handleOpen}><GridAddIcon/></Button> 
         <Modal

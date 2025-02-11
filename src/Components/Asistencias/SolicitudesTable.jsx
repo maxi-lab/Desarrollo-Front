@@ -32,7 +32,8 @@ export default function Solicitudes(){
           fetch(`${API_URL_BACKEND}Solicitud`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
-                const d=result.map((r,i)=>{return {...r,id:i+1}})
+                const r=result.filter(s=>s.atendido==false)
+                const d=r.map((r,i)=>{return {...r,id:i+1}})
                 setSolicitudes(d)
             })
             .catch((error) => console.error(error));

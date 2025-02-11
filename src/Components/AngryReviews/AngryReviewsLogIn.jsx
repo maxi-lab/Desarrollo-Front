@@ -9,13 +9,15 @@ import { deleteCookie } from "../../Helpers/Cookies/cookies";
     deleteCookie('tokenAngryReviews')
     login(usr_mail,password).then((r)=>{
         document.cookie=`tokenAngryReviews=${r} `
+        setUsrMail('')
+        setPassword('')
     })
     .catch(e=>console.error(e))
     }
     return<>
-    <Box>
-    <TextField label="Usuario o email" onChange={(e)=>setUsrMail(e.target.value)}/>
-    <TextField label="Contraseña" type="password" onChange={(e)=>setPassword(e.target.value)}/>
+    <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
+    <TextField value={usr_mail} label="Usuario o email" onChange={(e)=>setUsrMail(e.target.value)}/>
+    <TextField value={password} label="Contraseña" type="password" onChange={(e)=>setPassword(e.target.value)}/>
     <Button onClick={handleAuth}>Autenticarse</Button>
     </Box>
     

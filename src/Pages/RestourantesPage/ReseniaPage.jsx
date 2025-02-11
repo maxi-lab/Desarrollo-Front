@@ -20,6 +20,7 @@ export default function ReseniaPage(){
    const [resenias,setResenias]=useState([]);
    const [id,setId]=useState(0)
    const c=getCookie('tokenReview')
+   const u=getCookie('tokenAngryReviews')
    useEffect(()=>{
     obtenerPosts().then(r=>{
       const resto=r.find(r=>r.title===nomResto)
@@ -37,18 +38,18 @@ export default function ReseniaPage(){
       })
     })
     
-   },[])
-   const [rating,setRating]=useState(null)
+   },[resenias])
+   const [rating,setRating]=useState(0)
    const [cuerpo,setCuerpo]=useState("")
    const handlePublish=()=>{
     
-    crearReseña(c,cuerpo,rating,id)
+    crearReseña(u,cuerpo,rating,id)
     .then(r=>{
-      setResenias((prev)=>[prev,r])
+      setResenias((prev)=>[...prev,r])
     }).catch(e=>console.error(e))
     
     setCuerpo("")
-    setRating(null)
+    setRating(0)
    }
    return<>
    <Heading/>
@@ -92,9 +93,9 @@ export default function ReseniaPage(){
           onChange={(e)=>{setCuerpo(e.target.value)}}
         />
     <Rating
-        name="simple-uncontrolled"
-        onChange={(e)=>setRating(e.target._wrapperState.initialValue)}
-        defaultValue={rating}       
+        name="simple-controlled "
+        onChange={(e,newValue)=>setRating(newValue)}
+        value={rating}       
       />
     <Button onClick={handlePublish}>Publicar</Button>
     </Box>

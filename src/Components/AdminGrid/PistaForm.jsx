@@ -59,8 +59,8 @@ export default function PistaForm({saveData}) {
     
    return <>
    
-    <TextField label={'Nombre de pista'} onChange={handleNom} onClick={()=>saveData(formData)}/>
-    <RadioGroup defaultValue={"Muy Facil"} onChange={handlDif}  onClick={()=>saveData(formData)}>
+    <TextField label={'Nombre de pista'} onChange={handleNom} />
+    <RadioGroup defaultValue={"Muy Facil"} onChange={handlDif}  >
     <FormControlLabel value={"Muy Facil"} control={<Radio/>} label="Muy Facil"/>
     <FormControlLabel
         value="Facil"
