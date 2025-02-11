@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import { Box, Button } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import ChangePassForm from "../../Components/ChangePassForm/ChangePassForm";
 
 export default function AccountPage(){
@@ -23,7 +23,7 @@ export default function AccountPage(){
     return <>
         <Heading/>
         <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
-        <h1>Cuenta</h1>
+        <Typography variant="h5">Cuenta</Typography>
         <List sx={style}>
       <ListItem>
         <ListItemText primary={`Nombre de usuario: ${user.userName}`} />

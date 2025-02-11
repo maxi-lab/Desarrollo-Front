@@ -25,6 +25,8 @@ export default function ChangePassForm(){
         try{
             await logIn(credentials)
             verifyPass()?await cambiarPass(user.userName,newPass,credentials.password,user.token):console.log('contraseña no valida')
+            setPass('')
+            setNewPass('')
         }catch{
             console.error("todo mal")
         }

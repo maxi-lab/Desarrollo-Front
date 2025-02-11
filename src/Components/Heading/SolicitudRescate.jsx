@@ -54,11 +54,11 @@ export default function SolicitudRescate(){
             <Typography>Introduzca la pista (simulamos que tenemos su ubicacion)</Typography>
             <FormControl>
                 <InputLabel>Pista</InputLabel>
-                <Select value={pista} onChange={(e)=>setPista(e.target.value)}>
+                <Select value={pista} onChange={(e)=>setPista(e.target.value)} sx={{width:100}}>
                   {pistas.map((p)=>(<MenuItem value={p.nombre} key={p.id}>{p.nombre}</MenuItem>))}
                 </Select>
             </FormControl>
-        <Button onClick={solicitar}>S.O.S</Button>
+        <Button onClick={solicitar} variant="contained" sx={{ left:100}}>S.O.S</Button>
         </Box>
     </Modal>    
     </>

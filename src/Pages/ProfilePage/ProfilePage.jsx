@@ -5,7 +5,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography,Box } from "@mui/material";
 import { API_URL_BACKEND } from "../../data/API/env";
 
 export default function ProfilePage (){
@@ -56,15 +56,15 @@ export default function ProfilePage (){
       if (profile.nombre==null) {
         return <>
           <Heading/>
-          <h1>Perfil no encontrado </h1>
+          <Typography>Perfil no encontrado</Typography>
         </>
       }
       
       //tengo que corregir la API
     return<>
         <Heading/>
-        <div>
-            <h1>Tu Perfil</h1>
+        <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}} >
+            <Typography variant="h5">Mi perfil</Typography>
     <List sx={style}>
       <ListItem>
         <ListItemText primary={`Nombre: ${profile.nombre}`} />
@@ -80,7 +80,7 @@ export default function ProfilePage (){
       <Divider variant="inset" component="li" />
       <ListItem><ListItemText primary={profile.rol!=="Rescatista"?`Telefono ${profile.tel} `:''}/></ListItem>
       </List>
-      </div>
+      </Box>
     
     </>
 }

@@ -63,7 +63,7 @@ export default function ReseniaPage(){
         borderRadius:3,
         flexDirection: 'column',}}>
     
-    <h1>{nomResto}</h1>
+    <Typography variant='h3'>{nomResto}</Typography>
     <List sx={{ width: '100%', maxWidth: 360,  }}>
       {resenias.map((r)=>{
 
@@ -99,7 +99,10 @@ export default function ReseniaPage(){
       />
     <Button onClick={handlePublish}>Publicar</Button>
     </Box>
+    <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
+      <Typography variant='h4'>Angry Reviews</Typography>
       <AngryReviewsLogIn/>
       <AngryReviewsSingUp/>
+    </Box>
     </>
 }
