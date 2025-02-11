@@ -223,7 +223,7 @@ function AdminPage() {
   const {user}=useContext(UserContext)
   const [datos,setDatos]=useState([]);
   const [flag,setFlag]=useState(false)
-  const {user}=useContext(UserContext)
+
 
   handleSelectChange=(e,p)=>{
     setDatos((prev)=>{
