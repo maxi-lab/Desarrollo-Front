@@ -14,12 +14,14 @@ export default function ProfilePage (){
     const [isLoading,setIsLoading]=useState(true)
     const [error,setError]=useState(null)
     useEffect(()=>{
+
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
             headers: myHeaders,
+
             redirect: "follow"
           };
           
@@ -53,10 +55,12 @@ export default function ProfilePage (){
               </div>
         </>
       }
-      if (profile.nombre==null) {
+      if (profile==null) {
         return <>
           <Heading/>
+
           <Typography>Perfil no encontrado</Typography>
+
         </>
       }
       

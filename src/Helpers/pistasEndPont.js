@@ -1,3 +1,4 @@
+
 import { API_URL_BACKEND } from "../data/API/env";
 export async function eliminarPista(pista,token) {
   const myHeaders = new Headers();
@@ -7,6 +8,7 @@ export async function eliminarPista(pista,token) {
   const requestOptions = {
         method: "DELETE",
         headers: myHeaders,
+
         redirect: "follow"
       };
       
@@ -17,11 +19,13 @@ export async function eliminarPista(pista,token) {
 }
 export async function alternarEstado(pista,token) {
   const myHeaders = new Headers();
+
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "PUT",
     headers: myHeaders,
+
     redirect: "follow"
   };
   

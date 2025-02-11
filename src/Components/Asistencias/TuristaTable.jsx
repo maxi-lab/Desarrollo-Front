@@ -10,6 +10,7 @@ export default function TuristaTable (){
     const {user}=useContext(UserContext)
     useEffect(()=>{
         const myHeaders = new Headers();
+
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {

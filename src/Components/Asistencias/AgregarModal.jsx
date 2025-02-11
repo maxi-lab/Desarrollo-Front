@@ -4,7 +4,9 @@ import { crearAsistencia } from "../../Helpers/asistenciaEndPoint"
 import { UserContext } from "../../Context/UserContext"
 import { API_URL_BACKEND } from "../../data/API/env"
 
+
 export default function AgregarModal({leg,add}){
+
 
     const [open,setOpen]=useState(false)
     const {user}=useContext(UserContext)
@@ -31,8 +33,10 @@ export default function AgregarModal({leg,add}){
     const cerrar=()=>setOpen(false)
     const handleAgregar=async()=>{
         const a={dni:dni,legajo:leg,nomPista:pista}
+
         await crearAsistencia(a,user.token)
         add()
+
         cerrar()
     }
     return <>

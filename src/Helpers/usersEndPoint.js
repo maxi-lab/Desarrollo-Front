@@ -11,12 +11,14 @@ export  function agregarUser(user){
         .catch((error) => console.error(error));
 }
 export function acenderUser(user,token){
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "POST",
         headers: myHeaders,
+
         redirect: "follow"
       };
       
@@ -27,11 +29,13 @@ export function acenderUser(user,token){
 }
 export function decenderUser(user,token){
   const myHeaders = new Headers();
+
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
     headers: myHeaders,
+
     redirect: "follow"
   };
   
@@ -41,12 +45,14 @@ export function decenderUser(user,token){
     .catch((error) => console.error(error));
 }
 export function eliminarUser(user,token){
+
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
         headers: myHeaders,
+
         redirect: "follow"
       };
       
@@ -81,11 +87,14 @@ export async function reestablecerPass(u){
     redirect: "follow"
   };
   
+
   fetch(`${API_URL_BACKEND}User?u=${u}`, requestOptions)
+
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
+
 export async function cambiarPass(u,newPass,oldPass,token){
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
@@ -97,6 +106,7 @@ export async function cambiarPass(u,newPass,oldPass,token){
   };
   
   fetch(`${API_URL_BACKEND}User/CambiarPasswd?userName=${u}&oldPass=${oldPass}&newPassword=${newPass}`, requestOptions)
+
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));

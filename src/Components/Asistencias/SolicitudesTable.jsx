@@ -1,8 +1,10 @@
 import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow, Typography } from "@mui/material";
+
 import { useEffect, useState,useContext } from "react";
 import { atenderSolicitud } from "../../Helpers/solicitudEndPoint";
 import { UserContext } from "../../Context/UserContext";
 import { API_URL_BACKEND } from "../../data/API/env";
+
 export default function Solicitudes(){
     const [solicitudes,setSolicitudes]=useState([])
     const {user}=useContext(UserContext)
@@ -21,11 +23,13 @@ export default function Solicitudes(){
     }
     useEffect(()=>{
         const myHeaders = new Headers();
+
         myHeaders.append("Content-Type", "application/json");
         myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
             headers: myHeaders,
+
             redirect: "follow"
           };
           

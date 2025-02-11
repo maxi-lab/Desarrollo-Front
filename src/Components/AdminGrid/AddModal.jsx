@@ -1,6 +1,8 @@
 import { Button } from "@mui/material";
 import { GridAddIcon } from "@mui/x-data-grid";
+
 import { useContext, useState } from "react";
+
 import { Box } from "@mui/system";
 import Modal from "@mui/material/Modal";
 import PistaForm from "./PistaForm";
@@ -20,8 +22,10 @@ export default function AddModal({entidad,add}) {
     const handleClose = () => setOpen(false);
 
 
+
     const saveData=()=>{
         add()
+
         handleClose();
     }
     const entidadMap = new Map();

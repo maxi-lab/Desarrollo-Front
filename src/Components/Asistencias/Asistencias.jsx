@@ -10,6 +10,7 @@ export default function Asistencias(){
     const [legajo,setLegajo]=useState(0);
     const [flag,setFlag]=useState(false)
     const {user}=useContext(UserContext)
+
     const handleAmbulancia=(id)=>{
         const a=asistencias.find((a)=>a.id===id)
         const myHeaders = new Headers();
@@ -26,6 +27,7 @@ export default function Asistencias(){
             method: "POST",
             headers: myHeaders,
             body: raw,
+
             redirect: "follow"
         };
         
@@ -101,7 +103,9 @@ export default function Asistencias(){
                     </TableRow>)}
                 </TableBody>
             </Table>
+
             <AgregarModal leg={legajo} add={()=>{setFlag((prev)=>!prev)}}/>
+
         </Box>
     </>
 }

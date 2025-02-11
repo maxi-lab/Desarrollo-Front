@@ -12,10 +12,12 @@ import { eliminarRescatista } from '../../Helpers/rescatistaEndPoint';
 import AddModal from '../../Components/AdminGrid/AddModal';
 import { eliminarUser,acenderUser,decenderUser } from '../../Helpers/usersEndPoint';
 import { upMap,downMap } from '../../Helpers/roles';
+
 import { API_URL_BACKEND } from '../../data/API/env';
 import { UserContext } from '../../Context/UserContext';
 import { eliminarAsistencia } from '../../Helpers/asistenciaEndPoint';
 let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender,eliminarAsis;
+
 
 
 const pistas = [
@@ -218,7 +220,7 @@ const asistentes=[
   {field:'eliminar',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>eliminarAsis(params.row.codigo)}>Eliminar</Button>)},
 ]
 function AdminPage() {
-
+  const {user}=useContext(UserContext)
   const [datos,setDatos]=useState([]);
   const [flag,setFlag]=useState(false)
   const {user}=useContext(UserContext)
@@ -254,7 +256,9 @@ function AdminPage() {
   }
   eliminarUsr=async(p)=>{
     const id=p.id
+
     console.log(p.row.userName)
+
     await eliminarUser(p.row.userName,user.token)
     setDatos((u)=>u.filter(d=>d.id!==id))
     
@@ -309,9 +313,11 @@ function AdminPage() {
   eliminarPa=async(p)=>{
     try {
       await eliminarParada(p.row.nombre,user.token)
+
       const n=datos.filter(d=>d.id!==p.id)
       console.log(n)
       setDatos(n)
+
 
     } catch (error) {
       console.error('Error deleting:', error);
@@ -345,6 +351,7 @@ function AdminPage() {
     }
   }
  
+  
   const [entidades,setEntidades]=useState(pistas)
 
   const endpointMap= new Map();//mapea los nombres de las entidades con los nombres de los endpoints
@@ -358,7 +365,9 @@ function AdminPage() {
   endpointMap.set(asistentes,"Asistencia")
   useEffect(()=>{
     const myHeaders = new Headers();
+
     myHeaders.append("Content-Type", "application/json");
+
     myHeaders.append("Authorization", `Bearer ${user.token}`);
     const requestOptions = {
       method: "GET",

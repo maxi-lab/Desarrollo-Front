@@ -1,3 +1,4 @@
+
 import { API_URL_BACKEND } from "../data/API/env";
 export function eliminarTurista(dni,token) {
   const myHeaders = new Headers();
@@ -6,6 +7,7 @@ export function eliminarTurista(dni,token) {
     const requestOptions = {
         method: "DELETE",
         headers: myHeaders,
+
         redirect: "follow"
       };
       
@@ -14,10 +16,13 @@ export function eliminarTurista(dni,token) {
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
+
  
 export function agregarTurista(turista) {
+
   const requestOptions = {
     method: "POST",
+    headers:myHeaders,
     redirect: "follow"
   };
   

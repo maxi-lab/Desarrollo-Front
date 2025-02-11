@@ -1,7 +1,7 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useContext, useState } from "react";
 import { UserContext } from "../../Context/UserContext";
-import { cambiarPass, logIn } from "../../Helpers/usersEndPoint";
+import { cambiarPass} from "../../Helpers/usersEndPoint";
 export default function ChangePassForm(){
     const {user}=useContext(UserContext)
     const [pass,setPass]=useState('')
@@ -18,15 +18,14 @@ export default function ChangePassForm(){
     }
     
     const handleCambiar=async()=>{
-        const credentials={
-            "username":user.userName,
-            "password":pass,
-        }
+        
         try{
+
             await logIn(credentials)
             verifyPass()?await cambiarPass(user.userName,newPass,credentials.password,user.token):console.log('contraseña no valida')
             setPass('')
             setNewPass('')
+
         }catch{
             console.error("todo mal")
         }
