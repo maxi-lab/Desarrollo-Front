@@ -1,52 +1,62 @@
+import { API_URL_BACKEND } from "../data/API/env";
 export  function agregarUser(user){
     const requestOptions = {
         method: "POST",
         redirect: "follow"
       };
       
-      fetch(`https://localhost:7268/api/User/SingUp?pass=${user.name}&name=${user.password}&mail=${user.email}`, requestOptions)
+      fetch(`${API_URL_BACKEND}User/SingUp?pass=${user.name}&name=${user.password}&mail=${user.email}`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
 export function acenderUser(user,token){
-  const myHeaders = new Headers();
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "POST",
-        headers:myHeaders,
+        headers: myHeaders,
+
         redirect: "follow"
       };
       
-      fetch(`https://localhost:7268/api/User/Upgrade?name=${user}`, requestOptions)
+      fetch(`${API_URL_BACKEND}User/Upgrade?name=${user}`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
 }
 export function decenderUser(user,token){
   const myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${token}`);
+
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "POST",
-    headers:myHeaders,
+    headers: myHeaders,
+
     redirect: "follow"
   };
   
-  fetch(`https://localhost:7268/api/User/DownGrade?name=${user}`, requestOptions)
+  fetch(`${API_URL_BACKEND}User/DownGrade?name=${user}`, requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
 export function eliminarUser(user,token){
-  const myHeaders = new Headers();
+
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${token}`);
     const requestOptions = {
         method: "DELETE",
-        headers:myHeaders,
+        headers: myHeaders,
+
         redirect: "follow"
       };
       
-      fetch(`https://localhost:7268/api/User/Eliminar?name=${user}`, requestOptions)
+      fetch(`${API_URL_BACKEND}User/Eliminar?name=${user}`, requestOptions)
         .then((response) => response.text())
         .then((result) => console.log(result))
         .catch((error) => console.error(error));
@@ -66,7 +76,7 @@ const requestOptions = {
   redirect: "follow"
 };
 
-return fetch("https://localhost:7268/api/User/LogIn", requestOptions)
+return fetch(`${API_URL_BACKEND}User/LogIn`, requestOptions)
   .then((response) => response.json())
   .then((result) => result)
   .catch((error) => {throw error});
@@ -77,21 +87,26 @@ export async function reestablecerPass(u){
     redirect: "follow"
   };
   
-  fetch(`https://localhost:7268/api/User?u=${u}`, requestOptions)
+
+  fetch(`${API_URL_BACKEND}User?u=${u}`, requestOptions)
+
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
-export async function cambiarPass(u,oldPass,newPass,token){
+
+export async function cambiarPass(u,newPass,oldPass,token){
   const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Authorization", `Bearer ${token}`);
   const requestOptions = {
     method: "PUT",
-    headers:myHeaders,
+    headers: myHeaders,
     redirect: "follow"
   };
   
-  fetch(`https://localhost:7268/api/User/CambiarPasswd?userName=${u}&oldPass=${oldPass}&newPassword=${newPass}`, requestOptions)
+  fetch(`${API_URL_BACKEND}User/CambiarPasswd?userName=${u}&oldPass=${oldPass}&newPassword=${newPass}`, requestOptions)
+
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));

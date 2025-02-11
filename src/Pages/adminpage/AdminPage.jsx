@@ -12,8 +12,12 @@ import { eliminarRescatista } from '../../Helpers/rescatistaEndPoint';
 import AddModal from '../../Components/AdminGrid/AddModal';
 import { eliminarUser,acenderUser,decenderUser } from '../../Helpers/usersEndPoint';
 import { upMap,downMap } from '../../Helpers/roles';
+
+import { API_URL_BACKEND } from '../../data/API/env';
 import { UserContext } from '../../Context/UserContext';
-let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender;
+import { eliminarAsistencia } from '../../Helpers/asistenciaEndPoint';
+let alternarP,eliminarP,alternarT,eliminarT,eliminarPa,eliminarPu,eliminarTu,eliminarRe,handleSelectChange,eliminarUsr,acender,decender,eliminarAsis;
+
 
 
 const pistas = [
@@ -149,6 +153,11 @@ const turistas=[
     headerName: 'apellido',
     width: 150,
     editable: true,
+  },{field: 'telefono',
+    headerName: 'Telefono',
+    width: 150,
+    editable: true,
+
   },
   {
     field: 'userName',
@@ -157,6 +166,7 @@ const turistas=[
     width: 200,
     editable: true,
   },
+  
   {
     filed:'eliminar',
     headerName:'',
@@ -202,14 +212,27 @@ const usuarios=[
   {field:'decender',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>decender(params)}>Degradar</Button>)}
 
 ]
+const asistentes=[
+  {field:'nomApeTurista',headerName:'Turista',width:150},
+  {field:'nomApeRescatista',headerName:'Rescatista',width:150},
+  {field:'nomPista',headerName:'Pista',width:150},
+  {field:'codigo',headerName:'Codigo',width:150},
+  {field:'eliminar',headerName:'',with:150, renderCell:(params)=>(<Button onClick={()=>eliminarAsis(params.row.codigo)}>Eliminar</Button>)},
+]
 function AdminPage() {
   const {user}=useContext(UserContext)
   const [datos,setDatos]=useState([]);
+  const [flag,setFlag]=useState(false)
+  const {user}=useContext(UserContext)
 
   handleSelectChange=(e,p)=>{
     setDatos((prev)=>{
       prev.map((i)=>i.id==p.row.id?{...i,type:e.target.value}:i)
     })
+  }
+  eliminarAsis=(c)=>{
+    eliminarAsistencia(c,user.token)
+    setDatos((prev)=>prev.filter(d=>d.codigo!==c))
   }
   alternarP=async(p)=>{
     try {
@@ -233,6 +256,9 @@ function AdminPage() {
   }
   eliminarUsr=async(p)=>{
     const id=p.id
+
+    console.log(p.row.userName)
+
     await eliminarUser(p.row.userName,user.token)
     setDatos((u)=>u.filter(d=>d.id!==id))
     
@@ -287,7 +313,11 @@ function AdminPage() {
   eliminarPa=async(p)=>{
     try {
       await eliminarParada(p.row.nombre,user.token)
-      setDatos((prev)=>prev.filter(d=>d.id!==p.id))
+
+      const n=datos.filter(d=>d.id!==p.id)
+      console.log(n)
+      setDatos(n)
+
 
     } catch (error) {
       console.error('Error deleting:', error);
@@ -332,8 +362,12 @@ function AdminPage() {
   endpointMap.set(turistas,"Turista/Turistas")
   endpointMap.set(rescatistas,"Rescatista/Rescatistas")
   endpointMap.set(usuarios,"User/GetUsers")
+  endpointMap.set(asistentes,"Asistencia")
   useEffect(()=>{
     const myHeaders = new Headers();
+
+    myHeaders.append("Content-Type", "application/json");
+
     myHeaders.append("Authorization", `Bearer ${user.token}`);
     const requestOptions = {
       method: "GET",
@@ -341,7 +375,7 @@ function AdminPage() {
       redirect: "follow"
     };
     
-    fetch(`https://localhost:7268/api/${endpointMap.get(entidades)}`, requestOptions)
+    fetch(`${API_URL_BACKEND}${endpointMap.get(entidades)}`, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         const data= result.map((i,index)=>{
@@ -351,7 +385,7 @@ function AdminPage() {
       })
       .catch((error) => console.error(error))//atrapa el error
      
-  },[entidades])
+  },[entidades,flag])
   return (
     <div>
         <Heading/>
@@ -363,9 +397,10 @@ function AdminPage() {
           <Button onClick={()=>setEntidades(turistas)}>Turistas</Button>
           <Button onClick={()=>setEntidades(rescatistas)}>Rescatistas</Button>
           <Button onClick={()=>setEntidades(usuarios)}>Usuarios</Button>
+          <Button onClick={()=>setEntidades(asistentes)}>Asistencias</Button>
         </ButtonGroup>
         <AdminGrid columns={entidades} rows={datos} key={entidades.map(e=>e.field).join('-')}/>
-        <AddModal entidad={endpointMap.get(entidades)} /> 
+        {entidades!=asistentes?<AddModal entidad={endpointMap.get(entidades)} add={()=>setFlag((prev)=>!prev)} />:''} 
     </div>
     
   )

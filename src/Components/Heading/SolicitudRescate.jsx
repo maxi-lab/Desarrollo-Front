@@ -1,12 +1,30 @@
-import { Button, Modal, TextField, Typography } from "@mui/material";
+import { Button, Modal, Typography, FormControl,InputLabel,MenuItem,Select } from "@mui/material";
 import Box from '@mui/material/Box';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { crearSolicitud } from "../../Helpers/solicitudEndPoint";
-
+import { API_URL_BACKEND } from "../../data/API/env";
 export default function SolicitudRescate(){
     const [open,setOpen]=useState(false)
     const [pista,setPista]=useState('')
+    const [pistas,setPistas]=useState([])
 
+    useEffect(()=>{
+        const requestOptions = {
+            method: "GET",
+            redirect: "follow"
+          };
+                      
+          fetch(`${API_URL_BACKEND}Pista`, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+    
+              const r=result.map((p,i)=>{return {'nombre':p.nombre,'id':i+1}})
+              setPistas(r)
+                
+            })
+            .catch((error) => console.error(error));
+        
+    },[])
     const abrir=()=>setOpen(true)
     const cerrar=()=>setOpen(false)
     const solicitar=()=>{
@@ -34,8 +52,13 @@ export default function SolicitudRescate(){
     >
         <Box sx={style}>
             <Typography>Introduzca la pista (simulamos que tenemos su ubicacion)</Typography>
-        <TextField variant="outlined" label="Nombre de Pista" onChange={(e)=>setPista(e.target.value)}/>
-        <Button onClick={solicitar}>S.O.S</Button>
+            <FormControl>
+                <InputLabel>Pista</InputLabel>
+                <Select value={pista} onChange={(e)=>setPista(e.target.value)} sx={{width:100}}>
+                  {pistas.map((p)=>(<MenuItem value={p.nombre} key={p.id}>{p.nombre}</MenuItem>))}
+                </Select>
+            </FormControl>
+        <Button onClick={solicitar} variant="contained" sx={{ left:100}}>S.O.S</Button>
         </Box>
     </Modal>    
     </>

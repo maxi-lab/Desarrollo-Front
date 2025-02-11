@@ -1,4 +1,4 @@
-import { Box, Button,TextField } from "@mui/material"
+import { Box, Button,TextField, CircularProgress } from "@mui/material"
 import	Alert from '@mui/material/Alert';
 import { UserContext } from "../../Context/UserContext";
 import { useState,useContext } from "react"
@@ -6,22 +6,27 @@ import "./styles.css"
 import { agregarTurista } from "../../Helpers/turistasEndPont";
 import SaveIcon from '@mui/icons-material/Save';
 import { useNavigate } from "react-router-dom";
-export default function Turista() {
+export default function Turista({usrName}) {
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [dni, setDni] = useState('');
+    const [tel,setTel]=useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const {user} = useContext(UserContext);
+    const navigate = useNavigate();
     const handleSave=()=>{
+        setLoading(true)
         const regex = /[e+\-*/]/;
-        if((nombre==='' || apellido==='' || dni==='')&&!regex.test(dni)){
+        if((nombre==='' || apellido==='' || dni==='')&&!regex.test(dni)&&!regex.test(tel)){
             setError('Por favor complete todos los campos con valores validos')
+            setLoading(false)
             return
         }
         setError(null)
-        const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':user.name};
+        const turista = {'nombre':nombre, 'apellido':apellido, 'dni':dni,'nomUsr':usrName,'tel':tel}; 
         agregarTurista(turista)
-        useNavigate('/menu')
+        navigate('/menu')
         
     }
     return<div className="form">
@@ -31,7 +36,9 @@ export default function Turista() {
             <TextField variant="outlined" label="Nombre" onChange={(e)=>setNombre(e.target.value)} />
             <TextField variant="outlined" label="Apellido" onChange={(e)=>setApellido(e.target.value)}/>
             <TextField variant="outlined" label="DNI" type="number" onChange={(e)=>setDni(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
-            <Button onClick={handleSave} variant="contained">Guardar <SaveIcon/></Button>
+            <TextField variant="outlined" label="Telefono" type="number" onChange={(e)=>setTel(e.target.value)} />{/* ojo que el type number no permite el uso de puntos  */}
+            
+            {loading?<CircularProgress/>:<Button onClick={handleSave} variant="contained">Guardar <SaveIcon/></Button>}
         </Box>
     </div>
 }

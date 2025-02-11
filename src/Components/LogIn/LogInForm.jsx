@@ -1,15 +1,17 @@
 import { useState,useContext } from "react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, TextField,CircularProgress } from "@mui/material";
 import './styles.css';
 import { logIn } from "../../Helpers/usersEndPoint";
 import { UserContext } from "../../Context/UserContext";
 import LoginIcon from '@mui/icons-material/Login';
 import Alert from '@mui/material/Alert';
 import { useNavigate } from "react-router-dom";
+
 export default function LogInForm() {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
     const {setUser} = useContext(UserContext);
     const navegate=useNavigate()
     const handleLogIn=()=>{
@@ -17,6 +19,7 @@ export default function LogInForm() {
            setError('Por favor complete todos los campos'); 
             return; 
         }
+        setLoading(true);
         setError(null);
         const user = {'username':userName, 'password':password};
         logIn(user).then((response)=>{
@@ -24,7 +27,9 @@ export default function LogInForm() {
             navegate('/menu')   
             return
         }
-        ).catch((error)=>setError('Datos incorrectos'))
+        ).catch((error)=>{setError('Datos incorrectos')
+        setLoading(false)
+        })
     }
     return <div className="form">
         <h2>Iniciar sesíon</h2>
@@ -32,7 +37,7 @@ export default function LogInForm() {
         <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
             <TextField label="Nombre de usuario" variant="outlined" onChange={(e)=>setUserName(e.target.value)} />
             <TextField label="Contraseña" variant="outlined"  type="password" onChange={(e)=>setPassword(e.target.value)} />
-            <Button onClick={handleLogIn} variant="contained">Ingresar <LoginIcon/></Button>
+            {loading?<CircularProgress/>:<Button onClick={handleLogIn} variant="contained">Ingresar <LoginIcon/></Button>}
         </Box>
     
     </div>

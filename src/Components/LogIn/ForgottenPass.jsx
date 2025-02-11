@@ -16,13 +16,14 @@ export default function ForgottenPass() {
         }
         setError(null)
         reestablecerPass(username)
-        setError("La contraseña cambiada a tu nombre de usuario")
+        setUsername('')
+        setError("La contraseña cambiada a tu nombre de usuario. Cambiala en tu proximo inicio de sesion")
     }
     return <div className="form">
         <h2>Recuperar contraseña</h2>
         {error && <Alert severity="error" variant="outlined">{error}</Alert>}
         <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}}>
-            <TextField variant="outlined" label="Nombre de usuario" onChange={(e)=>setUsername(e.target.value)} />
+            <TextField variant="outlined" value={username} label="Nombre de usuario" onChange={(e)=>setUsername(e.target.value)} />
             <Button type="submit" onClick={handleRest} variant="contained">Recuperar <LockResetIcon/></Button>
         </Box>
     

@@ -8,6 +8,7 @@ import TransporteGrid from "../../Components/TransportGrid/TransporteGrid";
 import PuntosGrid from "../../Components/PuntosGrid/PuntosGrid";
 import ParadasGrid from "../../Components/ParadasGrid/ParadasGrid";
 import CircularProgress from '@mui/material/CircularProgress';
+import { API_URL_BACKEND } from "../../data/API/env";
 function Info(){
     const [activeSection, setActiveSection] = useState('Pistas');
     const [data,steData]=useState([]);
@@ -30,7 +31,7 @@ useEffect(()=>{
             redirect: "follow"
           };
           
-          fetch(`https://localhost:7268/api/${sectionMap.get(activeSection).endpoint}`, requestOptions)
+          fetch(`${API_URL_BACKEND}${sectionMap.get(activeSection).endpoint}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {
               console.log(result)

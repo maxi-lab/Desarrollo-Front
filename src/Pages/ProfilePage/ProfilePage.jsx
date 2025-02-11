@@ -5,7 +5,8 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, Typography,Box } from "@mui/material";
+import { API_URL_BACKEND } from "../../data/API/env";
 
 export default function ProfilePage (){
     const [profile,setProfile]=useState(null)
@@ -13,16 +14,18 @@ export default function ProfilePage (){
     const [isLoading,setIsLoading]=useState(true)
     const [error,setError]=useState(null)
     useEffect(()=>{
-      console.log(user.token)
+
       const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
       myHeaders.append("Authorization", `Bearer ${user.token}`);
         const requestOptions = {
             method: "GET",
-            headers:myHeaders,
+            headers: myHeaders,
+
             redirect: "follow"
           };
           
-          fetch(`https://localhost:7268/api/User/GetProfile?userName=${user.userName}`, requestOptions)
+          fetch(`${API_URL_BACKEND}User/GetProfile?userName=${user.userName}`, requestOptions)
             .then((response) => response.json())
             .then((result) => {setProfile(result)
                 setIsLoading(false)
@@ -55,15 +58,17 @@ export default function ProfilePage (){
       if (profile==null) {
         return <>
           <Heading/>
-          <h1>{error} </h1>
+
+          <Typography>Perfil no encontrado</Typography>
+
         </>
       }
       
       //tengo que corregir la API
     return<>
         <Heading/>
-        <div>
-            <h1>Tu Perfil</h1>
+        <Box sx={{'& > :not(style)': { m: 1, width: '30ch' },alignItems:'center',display:'flex',flexDirection:'column'}} >
+            <Typography variant="h5">Mi perfil</Typography>
     <List sx={style}>
       <ListItem>
         <ListItemText primary={`Nombre: ${profile.nombre}`} />
@@ -76,8 +81,10 @@ export default function ProfilePage (){
       <ListItem>
         <ListItemText primary={profile.rol==="Rescatista"?`Legajo: ${profile.nroIdentificador}`:`DNI: ${profile.nroIdentificador}`} />
       </ListItem>
-        </List>
-        </div>
+      <Divider variant="inset" component="li" />
+      <ListItem><ListItemText primary={profile.rol!=="Rescatista"?`Telefono ${profile.tel} `:''}/></ListItem>
+      </List>
+      </Box>
     
     </>
 }

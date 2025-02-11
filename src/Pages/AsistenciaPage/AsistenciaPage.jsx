@@ -7,6 +7,7 @@ import { Heading } from "../../Components/Heading/Headiing"
 export default function AsistenciaPage(){
     const {user}=useContext(UserContext)
     
+    
     return <>
     <Heading/>
     {user.rol==='Rescatista'?<RescatistaGrid/>:<TuristaTable/>}
