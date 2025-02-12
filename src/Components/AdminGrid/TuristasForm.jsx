@@ -42,6 +42,7 @@ export default function TuristasForm({saveData}) {
         setData({...data,usuario:e.target.value})
 
     };
+    const handleTel=(e)=>setData({...data,tel:e.target.value})
 
     const save=()=>{
         agregarTurista(data,user.token);
@@ -51,6 +52,7 @@ export default function TuristasForm({saveData}) {
         <TextField label={'Nombre de turista'} onChange={handleNombre}/>
         <TextField label={'Apellido de turista'} onChange={handleApellido}/>
         <TextField label={'DNI'} onChange={handleDni}/>
+        <TextField label={'Telefono'} onChange={handleTel}/>
         <FormControl>
             <InputLabel>Usuario</InputLabel>
             <Select value={data.usuario} onChange={handleUsuario}>

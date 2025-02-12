@@ -23,7 +23,7 @@ export default function RestoList({restos}){
           >
             
             <ListItemButton role={undefined} onClick={()=>reseniar(r.nombre)} dense>
-              <ListItemText id={labelId} primary={`Restorante ${r.nombre}`} />
+              <ListItemText id={labelId} primary={`${r.nombre}`} />
             </ListItemButton>
               <ListItemIcon>
                 <Rating value={r.calificacion} readOnly/>
