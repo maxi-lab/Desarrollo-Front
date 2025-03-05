@@ -59,7 +59,7 @@ export default function RestorantesPage(){
         borderRadius:3,
         flexDirection: 'column',}}>
         <div>
-        <Typography variant="h4" component='h1'>Restorantes</Typography>
+        <Typography variant="h4" component='h1'>Restaurantes</Typography>
         <RestoList restos={restorantes}/>
         </div>
     </Box>
