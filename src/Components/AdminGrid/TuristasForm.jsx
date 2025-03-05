@@ -7,7 +7,7 @@ import { API_URL_BACKEND } from "../../data/API/env";
 export default function TuristasForm({saveData}) {
     const {user} = useContext(UserContext);
     const [users,setUsers]=useState([])
-    const [data, setData] = useState({nombre:'',apellido:'',dni:'',usuario:'',tel:''});
+    const [data, setData] = useState({nombre:'',apellido:'',dni:'',nomUsr:'',tel:''});
         useEffect(()=>{
             const myHeaders = new Headers();
             myHeaders.append("Authorization", `Bearer ${user.token}`);
@@ -39,7 +39,8 @@ export default function TuristasForm({saveData}) {
 
     };
     const handleUsuario=(e)=>{
-        setData({...data,usuario:e.target.value})
+        setData({...data,nomUsr:e.target.value})
+
 
     };
     const handleTel=(e)=>setData({...data,tel:e.target.value})

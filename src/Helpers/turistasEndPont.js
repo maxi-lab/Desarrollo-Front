@@ -20,6 +20,9 @@ export function eliminarTurista(dni,token) {
  
 export function agregarTurista(turista) {
 
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  
   const requestOptions = {
     method: "POST",
     headers:myHeaders,
